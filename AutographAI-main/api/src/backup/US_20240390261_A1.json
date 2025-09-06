@@ -1,0 +1,619 @@
+{
+    "type": "cosmetic_product_patent",
+    "patent_no": "US 20240390261 A1",
+    "inventor_names": [
+        "Cyrus Andriolo",
+        "Celso Abreu",
+        "Fernando Guimaraes",
+        "Carlos Granados",
+        "Erika Petali"
+    ],
+    "cpcc_codes": [
+        "A61K8/365",
+        "A61K8/345",
+        "A61K8/922",
+        "A61K8/368",
+        "A61K8/9789",
+        "A61K8/44",
+        "A61Q5/00",
+        "A61Q5/06",
+        "A61K8/55",
+        "A61K8/34"
+    ],
+    "assignee": "L'OREAL",
+    "task_type": "product discover workflow",
+    "properties": {
+        "product_name": "Organic Curly Hair Treatment",
+        "description": "This innovative organic treatment is designed to manage and enhance the natural beauty of curly hair by utilizing a unique blend of amino acids, plant oils, and hydrating agents. Its advanced formulation effectively controls frizz, adds volume, and improves hair texture while ensuring lasting moisture and protection against environmental stressors.",
+        "functional_roles": {
+            "Organic Acid": [
+                {
+                    "chemical": "Tartaric Acid",
+                    "weight": "0.5% to 8.0%"
+                },
+                {
+                    "chemical": "Lactic Acid",
+                    "weight": "0.5% to 8.0%"
+                },
+                {
+                    "chemical": "Glutaric Acid",
+                    "weight": "0.5% to 8.0%"
+                },
+                {
+                    "chemical": "Etidronic Acid",
+                    "weight": "0.5% to 8.0%"
+                },
+                {
+                    "chemical": "Salicylic Acid",
+                    "weight": "0.5% to 8.0%"
+                },
+                {
+                    "chemical": "Glycolic Acid",
+                    "weight": "0.5% to 8.0%"
+                },
+                {
+                    "chemical": "At least one organic acid",
+                    "weight": "0.5% to 8.0%"
+                },
+                {
+                    "chemical": "At least one organic acid",
+                    "weight": "1.0% to 7.0%"
+                },
+                {
+                    "chemical": "At least one organic acid",
+                    "weight": "2.0% to 6.0%"
+                },
+                {
+                    "chemical": "At least one organic acid",
+                    "weight": "2.5% to 4.0%"
+                },
+                {
+                    "chemical": "At least one organic acid",
+                    "weight": "3.0% to 4.0%"
+                }
+            ],
+            "Hydroxyl-Group Compound": [
+                {
+                    "chemical": "At least one compound with at least one hydroxyl-group",
+                    "weight": "0.1% to 20.0%"
+                },
+                {
+                    "chemical": "Polyol",
+                    "weight": "0.1% to 20.0%"
+                },
+                {
+                    "chemical": "C2 to C6 monoalcohols",
+                    "weight": "0.1% to 20.0%"
+                },
+                {
+                    "chemical": "Propylene Glycol",
+                    "weight": "0.1% to 20.0%"
+                },
+                {
+                    "chemical": "Glycerin",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Propylene Glycol",
+                    "weight": "0.74% to 8.33%"
+                },
+                {
+                    "chemical": "Hexylene Glycol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Dipropylene Glycol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Caprylyl Glycol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Glycerin",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Ethylene Glycol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Diethylene Glycol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Triethylene Glycol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Tetraethylene Glycol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Pentaethylene Glycol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "1,2,6-Hexanetriol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Trimethylolpropane",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "2-Butene-1,4-Diol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "2-Ethyl-1,3-Hexanediol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "2-Methyl-2,4-Pentanediol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "1,2-Hexanediol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "1,2-Pentanediol",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "4-Methyl-1,2-Pentanediol",
+                    "weight": "Not specified"
+                }
+            ],
+            "Amino Acid": [
+                {
+                    "chemical": "At least one amino acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Arginine",
+                    "weight": "0.1% to 7.0%"
+                },
+                {
+                    "chemical": "Arginine",
+                    "weight": "2.0%"
+                },
+                {
+                    "chemical": "Aminomethane sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "2-aminoethane sulfonic acid (taurine)",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aminopropane sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aminobutane sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aminohexane sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aminoisopropyl sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aminododecyl sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aminobenzene sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aminotoulene sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Sulfanilic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Chlorosulfanilic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Diamino benzene sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Amino phenol sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Amino propyl benzene sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Amino hexyl benzene sulfonic acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "At least one charged amino acid (e.g., arginine, lysine, aspartic acid, glutamic acid)",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "At least one polar amino acid (e.g., glutamine, asparagine, histidine, serine, threonine, tyrosine, cysteine, methionine, tryptophan)",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "At least one hydrophobic amino acid (e.g., alanine, isoleucine, leucine, phenylalanine, valine, proline, glycine)",
+                    "weight": "Not specified"
+                }
+            ],
+            "Vegetal Resin": [
+                {
+                    "chemical": "Copaifera officinalis (BALSAM COPAIBA) RESIN",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Copaiba Officinalis (Balsam Copaiba) resin",
+                    "weight": "0.1% to 7.0%"
+                },
+                {
+                    "chemical": "Copaifera officinalis (balsam copaiba) resin",
+                    "weight": "0.17% to 3.93%"
+                }
+            ],
+            "Vegetal Oil": [
+                {
+                    "chemical": "Coconut oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Almond oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aloe vera oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Avocado oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Camelina oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Coffee oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Castor oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Grapeseed oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Jojoba oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Basil oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Bay oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Bergamot oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Black pepper essential oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Birch oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Camphor",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Cannabis oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Caraway oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Cardamom seed oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Carrot seed oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Chamomile oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Calamus root oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Cinnamon oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Citronella oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Clary sage",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Clove leaf oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Coffee",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Coriander",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Costmary oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Cranberry seed oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Cubeb",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Cumin oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Dill oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Eucalyptus oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Fennel seed oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Fenugreek oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Fir",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Frankincense oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Geranium oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Ginger oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Grapefruit oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Henna oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Horseradish oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Jasmine oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Juniper berry oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Lavender oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Lemon oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Lemongrass",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Marjoram",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Melaleuca",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Lemon balm oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Mountain savory",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Mugwort oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Mustard oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Myrrh oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Myrtle",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Neem tree oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Neroli",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Nutmeg",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Orange oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Oregano oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Orris oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Palo santo",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Parsley oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Peppermint oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Pine oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Plum oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Rose oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Rosehip oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Rosemary oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Rosewood oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Sandalwood oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Spruce",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Star anise oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Tarragon oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Tea tree oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Thyme oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Coconut Oil",
+                    "weight": "1.0% to 5.0%"
+                },
+                {
+                    "chemical": "Cocos nucifera (coconut) oil",
+                    "weight": "0.36% to 4.77%"
+                }
+            ],
+            "Water": [
+                {
+                    "chemical": "Water",
+                    "weight": "about 50% to about 99%"
+                },
+                {
+                    "chemical": "Water",
+                    "weight": "about 65% to about 95%"
+                },
+                {
+                    "chemical": "Water",
+                    "weight": "about 70% to about 92%"
+                },
+                {
+                    "chemical": "Water",
+                    "weight": "QS"
+                },
+                {
+                    "chemical": "Water",
+                    "weight": "Not specified"
+                }
+            ],
+            "Additional Ingredients": [
+                {
+                    "chemical": "Optional additional ingredients",
+                    "weight": "about 1% to about 70%"
+                }
+            ],
+            "Alcohol": [
+                {
+                    "chemical": "Ethanol",
+                    "weight": "0.55% to 4.11%"
+                }
+            ]
+        }
+    }
+}

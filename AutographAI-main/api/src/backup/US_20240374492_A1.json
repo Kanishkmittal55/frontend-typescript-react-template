@@ -1,0 +1,24 @@
+{
+    "type": "cosmetic_product_patent",
+    "patent_no": "US 20240374492 A1",
+    "inventor_names": [
+        "Hani M. Fares",
+        "Donald I. Prettypaul",
+        "Drupesh Patel"
+    ],
+    "cpcc_codes": [
+        "A61Q17/04",
+        "A61K8/37",
+        "A61K8/35",
+        "A61K2800/591",
+        "A61K2800/52",
+        "A61K2800/49"
+    ],
+    "assignee": "ISP Investments LLC",
+    "task_type": "product discover workflow",
+    "properties": {
+        "product_name": "Advanced Photostabilizing Sunscreen Emulsion",
+        "description": "This innovative sunscreen formulation combines effective emulsification compounds and solubilizers to enhance the stability and photostability of active ingredients like avobenzone and dibenzoylmethane, providing superior UV protection. Enriched with a blend of organic and inorganic blockers, antioxidants, and moisturizing agents, this emulsion ensures optimal skin protection against harmful UV radiation while maintaining a lightweight, non-greasy feel.",
+        "functional_roles": null
+    }
+}

@@ -1,0 +1,69 @@
+{
+    "type": "cosmetic_product_patent",
+    "patent_no": "US 20240358622 A1",
+    "inventor_names": [
+        "Guillaume Kergosien",
+        "K\u00e9vin Du"
+    ],
+    "cpcc_codes": [
+        "A61K8/892",
+        "A61Q1/02",
+        "A61K8/891",
+        "A61Q1/00",
+        "A61K2800/43",
+        "A61K2800/594",
+        "A61K2800/31"
+    ],
+    "assignee": "L'OREAL",
+    "task_type": "product discover workflow",
+    "properties": {
+        "product_name": "Advanced Skin-Enhancing Emulsion",
+        "description": "This innovative emulsion combines keratin properties with a unique blend of silicone and elastomeric materials to create a smooth, supple texture that effectively reduces the visibility of skin imperfections. Formulated with a variety of active ingredients, including organopolysiloxanes and specialized pigments, it offers enhanced skin care benefits while providing a radiant, flawless finish.",
+        "functional_roles": {
+            "Silicone Elastomer": [
+                {
+                    "chemical": "Silicone elastomer containing carboxylic acid functions",
+                    "weight": "2% to 25% by weight (preferably 5% to 15% by weight)"
+                },
+                {
+                    "chemical": "Silicone elastomer containing carboxylic acid functions",
+                    "weight": "10% to 40% by weight (preferably 20% to 35% by weight)"
+                },
+                {
+                    "chemical": "HEXYL/SUCCINYL DIMETHICONE CROSSPOLYMER",
+                    "weight": "63% (i.e. 18.9% of polymer active material)"
+                }
+            ],
+            "Copolymer": [
+                {
+                    "chemical": "Copolymer based on silicone resin and on silicone of dimethiconol type",
+                    "weight": "0.2% to 60% by weight (preferably 1% to 30% by weight)"
+                },
+                {
+                    "chemical": "Copolymer based on silicone resin and silicone of dimethiconol type",
+                    "weight": "Greater than 1% and up to 40% by weight (preferably ranging from 1.5% to 20% by weight, and more preferentially ranging from 1.5% to 15% by weight)"
+                }
+            ],
+            "Organic Alcohol": [
+                {
+                    "chemical": "Isopropanol",
+                    "weight": "0.1% to 10% by weight (preferably from 1% to 5% by weight)"
+                },
+                {
+                    "chemical": "Ethanol",
+                    "weight": "0.1% to 10% by weight (preferably from 1% to 5% by weight)"
+                }
+            ],
+            "Pigment": [
+                {
+                    "chemical": "Titanium Dioxide",
+                    "weight": "7.5%"
+                },
+                {
+                    "chemical": "Iron Oxides",
+                    "weight": "At least 5% by weight (preferably from 5% to 40% by weight, in particular from 10% to 30% by weight, and more particularly from 10% to 20% by weight)"
+                }
+            ]
+        }
+    }
+}

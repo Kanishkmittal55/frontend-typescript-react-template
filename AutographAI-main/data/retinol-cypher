@@ -1,0 +1,64 @@
+CREATE (:`Country` {import_name: 'United States', `name`: 'United States'  })
+CREATE (:`Country` {import_name: 'Switzerland', `name`: 'Switzerland'  })
+CREATE (:`Country` {import_name: 'Antarctic', `name`: 'Antarctic'  })
+CREATE (:`Country` {import_name: 'India', `name`: 'India'  })
+CREATE (:`Country` {import_name: 'Bangladesh', `name`: 'Bangladesh'  })
+CREATE (:`Country` {import_name: 'Indonesia', `name`: 'Indonesia'  })
+CREATE (:`Disease` {import_name: 'Vitamin A deficiency', `name`: 'Vitamin A deficiency'  })
+CREATE (:`Disease` {import_name: 'Xerophthalmia', `name`: 'Xerophthalmia'  })
+CREATE (:`Disease` {import_name: 'Measles', `name`: 'Measles'  })
+CREATE (:`Disease` {import_name: 'Osteoporosis', `name`: 'Osteoporosis'  })
+CREATE (:`Disease` {import_name: 'Carotenosis', `name`: 'Carotenosis'  })
+CREATE (:`Disease` {import_name: 'microphthalmia'  })
+CREATE (:`Drug` {import_name: 'Retinol', `Formula`: 'C 20 H 30 O', `Molar mass`: '286.459', `Melting point`: '62–64 °C', `Boiling point`: '137–138 °C', `Solubility in water`: '0.000017 mg/mL (20 °C)'  })
+CREATE (:`Drug` {import_name: 'Vitamin A', `Formula`: 'C 20 H 30 O', `Molar mass`: '286.459', `Melting point`: '62–64 °C', `Boiling point`: '137–138 °C', `Solubility in water`: '0.000017 mg/mL (20 °C)'  })
+CREATE (:`Drug` {import_name: 'Retinoic acid'  })
+CREATE (:`Drug` {import_name: '11- cis -retinal'  })
+CREATE (:`Organization` {import_name: 'World Health Organization', `name`: 'World Health Organization'  })
+CREATE (:`Organization` {import_name: 'Cochrane Collaboration', `name`: 'Cochrane Collaboration'  })
+CREATE (:`Organization` {import_name: '[Homeobox'  })
+CREATE (:`Organization` {import_name: 'Hox-1'  })
+CREATE (:`Organization` {import_name: 'rhombomere 4'  })
+CREATE (:`Organization` {import_name: 'rhombomere 2'  })
+CREATE (:`Organization` {import_name: 'retina'  })
+CREATE (:`Organization` {import_name: 'mesenchyme'  })
+CREATE (:`Organization` {import_name: 'perioptic mesenchyme'  })
+CREATE (:`Organization` {import_name: 'cornea'  })
+CREATE (:`Organization` {import_name: 'eyelid'  })
+CREATE (:`Organization` {import_name: 'optic cup'  })
+CREATE (:`Organization` {import_name: 'Retinoic acid receptor'  })
+CREATE (:`Organization` {import_name: 'stem cell'  })
+CREATE (:`Organization` {import_name: 'posterior foregut lineages'  })
+CREATE (:`Organization` {import_name: 'visual cycle'  })
+CREATE (:`Organization` {import_name: 'RPE65'  })
+CREATE (:`Organization` {import_name: 'pigment epithelium'  })
+CREATE (:`Organization` {import_name: 'photoreceptor cells'  })
+CREATE (:`Organization` {import_name: 'rod'  })
+CREATE (:`Organization` {import_name: 'cone'  })
+CREATE (:`Organization` {import_name: 'opsin'  })
+CREATE (:`Person` {import_name: 'Xavier Mertz', `name`: 'Xavier Mertz'  });
+MATCH (source { import_name: 'Retinol' }), (target { import_name: 'Vitamin A deficiency' }) CREATE (source)-[:`treats` {}]->(target);
+MATCH (source { import_name: 'Retinol' }), (target { import_name: 'Xerophthalmia' }) CREATE (source)-[:`treats` {}]->(target);
+MATCH (source { import_name: 'Retinol' }), (target { import_name: 'Measles' }) CREATE (source)-[:`reduces risk of complications in` {}]->(target);
+MATCH (source { import_name: 'Retinol' }), (target { import_name: 'United States' }) CREATE (source)-[:`prescribed in` {}]->(target);
+MATCH (source { import_name: 'Retinol' }), (target { import_name: 'World Health Organization' }) CREATE (source)-[:`listed by` {}]->(target);
+MATCH (source { import_name: 'Vitamin A' }), (target { import_name: 'Retinol' }) CREATE (source)-[:`is form of` {}]->(target);
+MATCH (source { import_name: 'Xavier Mertz' }), (target { import_name: 'Switzerland' }) CREATE (source)-[:`is from` {}]->(target);
+MATCH (source { import_name: 'Xavier Mertz' }), (target { import_name: 'Antarctic' }) CREATE (source)-[:`died in` {}]->(target);
+MATCH (source { import_name: 'Vitamin A' }), (target { import_name: 'Osteoporosis' }) CREATE (source)-[:`causes` {}]->(target);
+MATCH (source { import_name: 'Vitamin A' }), (target { import_name: 'Carotenosis' }) CREATE (source)-[:`causes` {}]->(target);
+MATCH (source { import_name: 'Vitamin A' }), (target { import_name: 'India' }) CREATE (source)-[:`used in` {}]->(target);
+MATCH (source { import_name: 'Vitamin A' }), (target { import_name: 'Bangladesh' }) CREATE (source)-[:`used in` {}]->(target);
+MATCH (source { import_name: 'Vitamin A' }), (target { import_name: 'Indonesia' }) CREATE (source)-[:`used in` {}]->(target);
+MATCH (source { import_name: '[Homeobox' }), (target { import_name: 'homeodomain transcription factors' }) CREATE (source)-[:`encodes` {}]->(target);
+MATCH (source { import_name: 'Hox-1' }), (target { import_name: 'rhombomere 4' }) CREATE (source)-[:`deleted from` {}]->(target);
+MATCH (source { import_name: 'rhombomere 4' }), (target { import_name: 'rhombomere 2' }) CREATE (source)-[:`behaves like` {}]->(target);
+MATCH (source { import_name: 'Retinoic acid' }), (target { import_name: 'retina' }) CREATE (source)-[:`synthesized in` {}]->(target);
+MATCH (source { import_name: 'Retinoic acid' }), (target { import_name: 'mesenchyme' }) CREATE (source)-[:`secreted into` {}]->(target);
+MATCH (source { import_name: 'Retinoic acid' }), (target { import_name: 'perioptic mesenchyme' }) CREATE (source)-[:`prevents overgrowth of` {}]->(target);
+MATCH (source { import_name: 'Retinoic acid' }), (target { import_name: 'differentiation' }) CREATE (source)-[:`used in` {}]->(target);
+MATCH (source { import_name: 'Retinoic acid' }), (target { import_name: 'Retinoic acid receptor' }) CREATE (source)-[:`activates` {}]->(target);
+MATCH (source { import_name: 'Retinol' }), (target { import_name: 'RPE65' }) CREATE (source)-[:`converted by` {}]->(target);
+MATCH (source { import_name: 'Retinol' }), (target { import_name: '11- cis -retinal' }) CREATE (source)-[:`converted into` {}]->(target);
+MATCH (source { import_name: '11- cis -retinal' }), (target { import_name: 'photoreceptor cells' }) CREATE (source)-[:`transported into` {}]->(target);
+MATCH (source { import_name: '11- cis -retinal' }), (target { import_name: 'opsin' }) CREATE (source)-[:`binds to` {}]->(target);

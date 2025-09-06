@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  kg:
+    build:
+      context: ./kg
+    image: my-neo4j-community
+    ports:
+      - "7474:7474" 
+      - "7687:7687" 
+    environment:
+      NEO4J_AUTH: "neo4j/your12345"
+      NEO4J_PLUGINS: '["apoc"]'
+    volumes:
+      - ./kg/data/graph_db:/data
+      - ./kg/models:/var/lib/neo4j/import/models
+
+  backend:
+    build:
+      context: ./api
+    hostname: api
+    restart: always
+    container_name: api
+    ports:
+      - 7860:7860
+      - 11434:11434
+    env_file:
+      - .env
+    volumes:
+      - ./api:/api
+
+  frontend:
+    build:
+      context: ./ui
+    hostname: ui
+    restart: always
+    container_name: ui
+    ports:
+      - 4173:4173
+    volumes:
+      - ./ui:/app # Mount the source code folder
+      - /app/node_modules # Persist node_modules in the container
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Enable polling for hot reloading
+      - NODE_ENV=development

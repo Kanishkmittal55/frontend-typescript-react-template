@@ -19,6 +19,9 @@ export const dashboardRoutes: RouteObject[] = [
 				<DashboardLayout />
 			</LoginAuthGuard>
 		),
-		children: [{ index: true, element: <Navigate to={GLOBAL_CONFIG.defaultRoute} replace /> }, ...getRoutes()],
+		children: [
+			// { index: true, element: <Navigate to={GLOBAL_CONFIG.defaultRoute} replace /> },
+			 ...getRoutes()
+			],
 	},
 ];

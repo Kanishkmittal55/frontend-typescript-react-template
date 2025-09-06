@@ -1,0 +1,245 @@
+[
+    {
+        "question": "Is US 20240398687 A1 an entity?",
+        "answer": "Yes, it is the id property of a Patent entity."
+      },
+      {
+        "question": "Is HYBRID NAIL COMPOSITION an entity?",
+        "answer": "No, it is not an entity. It is a title property of the Patent entity."
+      },
+      {
+        "question": "Is HSIEH; I-fan an entity?",
+        "answer": "Yes, it is an entity of type Person with the property name."
+      },
+      {
+        "question": "Is L’ORÉAL an entity?",
+        "answer": "Yes, it is an entity of type Organization with the property name."
+      },
+      {
+        "question": "Is Paris an entity?",
+        "answer": "No, Paris is not an entity. It is part of the location information of an Organization entity."
+      },
+      {
+        "question": "Is 19% an entity?",
+        "answer": "No, 19% is not an entity. It is the weight_percentage property of the Chemical entity UV-Curable Materials."
+      },
+      {
+        "question": "Is ultraviolet (UV) gel portion an entity?",
+        "answer": "No, it is not an entity. It is part of the description of a component of the patent."
+      },
+      {
+        "question": "Is Difunctional Acrylate Oligomer an entity?",
+        "answer": "Yes, it is a Chemical entity with a name property."
+      },
+      {
+        "question": "Is photoinitiator an entity?",
+        "answer": "Yes, it is a Chemical entity with a name property."
+      },
+      {
+        "question": "Is solvents an entity?",
+        "answer": "Yes, it is a Chemical entity with a name property."
+      },
+      {
+        "question": "Is US 20240398687 A1 a property?",
+        "answer": "Yes, it is the id property of a Patent entity."
+      },
+      {
+        "question": "Is Scotch Plains a property?",
+        "answer": "Yes, it is part of the location (city) of the Person entity."
+      },
+      {
+        "question": "Is Springfield a property?",
+        "answer": "Yes, it is part of the location (city) of the Person entity."
+      },
+      {
+        "question": "Is FR 2308063 a property?",
+        "answer": "Yes, it is part of the foreign application priority data of the Patent entity."
+      },
+      {
+        "question": "Is 2023-07-26 a property?",
+        "answer": "Yes, it is the application date for a foreign patent application."
+      },
+      {
+        "question": "Is CPCI A 61 K 8 / 87 a property?",
+        "answer": "No, it is not a property. It is part of the CPC classification, which is not an entity."
+      },
+      {
+        "question": "Is UV-Curable Materials a property?",
+        "answer": "No, it is not a property. It is a Chemical entity."
+      },
+      {
+        "question": "Is weight_percentage a property?",
+        "answer": "Yes, it is a property of a Chemical entity."
+      },
+      {
+        "question": "Is invented_by a property?",
+        "answer": "No, invented_by is a relationship between a Patent entity and a Person entity."
+      },
+      {
+        "question": "Is assigned_to a property?",
+        "answer": "No, assigned_to is a relationship between a Patent entity and an Organization entity."
+      },
+      {
+        "question": "Is HSIEH; I-fan connected to the patent?",
+        "answer": "Yes, via the relationship invented_by."
+      },
+      {
+        "question": "Is HARIHARAN; Ramakrishnan connected to the patent?",
+        "answer": "Yes, via the relationship invented_by."
+      },
+      {
+        "question": "Is L’ORÉAL connected to the patent?",
+        "answer": "Yes, via the relationship assigned_to."
+      },
+      {
+        "question": "Is UV-Curable Materials connected to the patent?",
+        "answer": "Yes, via the relationship contains_chemical."
+      },
+      {
+        "question": "Is solvents connected to the patent?",
+        "answer": "Yes, via the relationship contains_chemical."
+      },
+      {
+        "question": "Is Difunctional Acrylate Oligomer connected to the patent?",
+        "answer": "Yes, via the relationship contains_chemical."
+      },
+      {
+        "question": "Is photoinitiator connected to the patent?",
+        "answer": "Yes, via the relationship contains_chemical."
+      },
+      {
+        "question": "Is invented_by a valid relationship?",
+        "answer": "Yes, it connects a Patent entity to a Person entity."
+      },
+      {
+        "question": "Is contains_chemical a valid relationship?",
+        "answer": "Yes, it connects a Patent entity to a Chemical entity."
+      },
+      {
+        "question": "Is assigned_to a valid relationship?",
+        "answer": "Yes, it connects a Patent entity to an Organization entity."
+      },
+      {
+        "question": "Is CPCI A 61 K 8 / 87 an entity?",
+        "answer": "No, it is part of metadata (classification) and not an entity."
+      },
+      {
+        "question": "Is N/A an entity?",
+        "answer": "No, N/A is noise in the data."
+      },
+      {
+        "question": "Is May 31, 2023 an entity?",
+        "answer": "No, it is part of a property (application date) of the Patent entity."
+      },
+      {
+        "question": "Is 2-week wear period an entity?",
+        "answer": "No, it is part of the description and not an entity."
+      },
+      {
+        "question": "Is target color an entity?",
+        "answer": "No, it is part of the description and not an entity."
+      },
+      {
+        "question": "Is high chip resistance an entity?",
+        "answer": "No, it is part of the description and not an entity."
+      },
+      {
+        "question": "Is easy to remove an entity?",
+        "answer": "No, it is part of the description and not an entity."
+      },
+      {
+        "question": "Is 2024-05-31 an entity?",
+        "answer": "No, it is a property (filing date) of the Patent entity."
+      },
+      {
+        "question": "Is cosmetic nail formulations an entity?",
+        "answer": "No, it is part of the description."
+      },
+      {
+        "question": "Is irritation an entity?",
+        "answer": "No, it is part of the description."
+      },
+      {
+        "question": "Is a chemical like Difunctional Acrylate Oligomer an entity?",
+        "answer": "Yes, it is a Chemical entity."
+      },
+      {
+        "question": "Is a person's name like HSIEH; I-fan an entity?",
+        "answer": "Yes, it is a Person entity."
+      },
+      {
+        "question": "Is an organization's name like L’ORÉAL an entity?",
+        "answer": "Yes, it is an Organization entity."
+      },
+      {
+        "question": "Are photoinitiator and solvents entities?",
+        "answer": "Yes, they are Chemical entities."
+      },
+      {
+        "question": "Can N/A ever be an entity?",
+        "answer": "No, it represents missing or irrelevant data."
+      },
+      {
+        "question": "Can application date be an entity?",
+        "answer": "No, it is a property of a Patent entity."
+      },
+      {
+        "question": "Can relationships like invented_by or assigned_to be properties?",
+        "answer": "No, they are relationships, not properties."
+      },
+      {
+        "question": "Is metadata like CPC classification an entity?",
+        "answer": "No, it is metadata, not an entity."
+      },
+      {
+        "question": "Is a title like 'HYBRID NAIL COMPOSITION' an entity?",
+        "answer": "No, it is a property of a Patent entity."
+      },
+      {
+        "question": "Is a weight_percentage like 19% an entity?",
+        "answer": "No, it is a property of a Chemical entity."
+      },
+    {"question": "What is 'HYBRID NAIL COMPOSITION'?", "answer": "'HYBRID NAIL COMPOSITION' is the title of the patent entity and is not an entity itself."},
+    {"question": "What type of entity is 'UV-Curable Materials'?", "answer": "'UV-Curable Materials' is a Chemical entity because it represents a group of materials with properties like weight percentage."},
+    {"question": "Is 'at least 19% by weight' an entity?", "answer": "No, 'at least 19% by weight' is not an entity. It is a property of the Chemical entity 'UV-Curable Materials'."},
+    {"question": "What entity type does 'Photoinitiator' belong to?", "answer": "'Photoinitiator' is a Chemical entity because it refers to a component used in the nail composition."},
+    {"question": "Is 'ethyl trimethylbenzoyl phenylphosphinate' an entity?", "answer": "Yes, 'ethyl trimethylbenzoyl phenylphosphinate' is a Chemical entity as it specifies a type of photoinitiator."},
+    {"question": "What is the role of 'Urethane Acrylate Monomer' in this document?", "answer": "'Urethane Acrylate Monomer' is a Chemical entity that is a component of 'UV-Curable Materials'."},
+    {"question": "Is 'at least 19% by weight' a property? If so, of what?", "answer": "Yes, 'at least 19% by weight' is a property of 'UV-Curable Materials'."},
+    {"question": "What type of entity is 'Film Forming Agent'?", "answer": "'Film Forming Agent' is a Chemical entity that refers to a component in the solvent-based portion."},
+    {"question": "Is 'nitrocellulose' an entity?", "answer": "Yes, 'nitrocellulose' is a Chemical entity and a specific type of 'Film Forming Agent'."},
+    {"question": "Is 'adipic acid/neopentyl glycol/trimellitic anhydride copolymer' an entity?", "answer": "Yes, 'adipic acid/neopentyl glycol/trimellitic anhydride copolymer' is a Chemical entity and a type of co-film forming agent."},
+    {"question": "What does the term 'weight_percentage' represent?", "answer": "'weight_percentage' is a property that quantifies the proportion of a chemical in the composition."},
+    {"question": "Is 'solvent-based portion' an entity?", "answer": "No, 'solvent-based portion' is not an entity. It describes a part of the overall composition."},
+    {"question": "Is 'UV gel portion' an entity?", "answer": "No, 'UV gel portion' is not an entity. It describes a section of the nail composition that contains chemicals."},
+    {"question": "What type of entity is 'Difunctional Acrylate Oligomer'?", "answer": "'Difunctional Acrylate Oligomer' is a Chemical entity that acts as part of the UV-curable materials."},
+    {"question": "What is the relationship between 'UV-Curable Materials' and 'Photoinitiator'?", "answer": "'Photoinitiator' is a component of 'UV-Curable Materials', represented as a relationship 'contains_component'."},
+    {"question": "Is '19-50%' an entity?", "answer": "No, '19-50%' is a numeric property describing the total amount of UV gel portion."},
+    {"question": "What entity is 'polymerizable (meth)acrylate'?", "answer": "'Polymerizable (meth)acrylate' is a Chemical entity with a specific subtype of 'Pyromellitic Dimethacrylate'."},
+    {"question": "Is 'Pyromellitic Dimethacrylate' a property or an entity?", "answer": "'Pyromellitic Dimethacrylate' is a Chemical entity, specifying a type of polymerizable (meth)acrylate."},
+    {"question": "Is '3-6%' an entity?", "answer": "No, '3-6%' is a property describing the total amount of the 'Photoinitiator' chemical."},
+    {"question": "What does the term 'type I photoinitiator' represent?", "answer": "'type I photoinitiator' is a property of 'Photoinitiator' describing its classification."},
+    {"question": "Is 'at least one film forming agent' an entity?", "answer": "No, 'at least one film forming agent' is not an entity. It describes a group of chemical components."},
+    {"question": "What type of entity is 'acrylates copolymer'?", "answer": "'acrylates copolymer' is a Chemical entity and a subtype of 'Acrylate Film Former'."},
+    {"question": "What is the relationship between 'UV-Curable Materials' and 'Difunctional Acrylate Oligomer'?", "answer": "'Difunctional Acrylate Oligomer' is a component of 'UV-Curable Materials', represented as 'contains_component'."},
+    {"question": "Is 'urethane monomer' a property or entity?", "answer": "'urethane monomer' is a property describing the chemical type of 'Difunctional Acrylate Oligomer'."},
+    {"question": "What entity is 'Cellulose Agent'?", "answer": "'Cellulose Agent' is a Chemical entity and a subtype of 'Film Forming Agent'."},
+    {"question": "Is '2-8%' an entity or property?", "answer": "'2-8%' is a property describing the weight percentage of 'Polymerizable Methacrylate'."},
+    {"question": "What type of entity is 'Acrylate Film Former'?", "answer": "'Acrylate Film Former' is a Chemical entity that specifies a film-forming component."},
+    {"question": "What is the relationship between 'Film Forming Agent' and 'Cellulose Agent'?", "answer": "'Cellulose Agent' is a specific subtype of 'Film Forming Agent'."},
+    {"question": "What entity type does 'solvents' belong to?", "answer": "'solvents' is a Chemical entity in the solvent-based portion of the composition."},
+    {"question": "Is 'urethane acrylate monomer' an entity?", "answer": "'Urethane Acrylate Monomer' is a Chemical entity and a subtype of 'Difunctional Acrylate Oligomer'."},
+    {"question": "Is 'high chip resistance' an entity?", "answer": "No, 'high chip resistance' is not an entity. It is a descriptive feature of the nail composition."},
+    {"question": "Is 'target color' an entity?", "answer": "No, 'target color' is not an entity. It describes a desired outcome or feature of the composition."},
+    {"question": "What type of entity is 'co-film forming agent'?", "answer": "'co-film forming agent' is a Chemical entity and part of the solvent-based portion."},
+    {"question": "Is 'nitrocellulose' a property or an entity?", "answer": "'Nitrocellulose' is a Chemical entity and a subtype of 'Cellulose Agent'."},
+    {"question": "Is 'removable relatively easily' an entity?", "answer": "No, 'removable relatively easily' is not an entity. It is a feature of the nail composition."},
+    {"question": "Is 'e.g., 2 weeks of wear' an entity?", "answer": "No, '2 weeks of wear' is not an entity. It is a description of product performance."},
+    {"question": "Is 'UV gel portion' a property?", "answer": "No, 'UV gel portion' is not a property. It is a part of the nail composition structure."},
+    {"question": "What entity type does 'Adipic Acid/Neopentyl Glycol/Trimellitic Anhydride Copolymer' belong to?", "answer": "'Adipic Acid/Neopentyl Glycol/Trimellitic Anhydride Copolymer' is a Chemical entity under 'Co-Film Forming Agent'."},
+    {"question": "Is 'at least 50%' a property?", "answer": "Yes, 'at least 50%' is a property describing the solvent-based portion's weight percentage."},
+    {"question": "Is 'weight percentage' a node or property?", "answer": "'Weight percentage' is a property describing the proportion of a chemical in the composition."},
+    {"question": "Is 'ethyl trimethylbenzoyl phenylphosphinate' a subtype or entity?", "answer": "'Ethyl trimethylbenzoyl phenylphosphinate' is a Chemical entity and a subtype of 'Photoinitiator'."}
+    
+  ]
+  

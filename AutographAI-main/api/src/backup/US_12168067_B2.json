@@ -1,0 +1,548 @@
+{
+    "type": "cosmetic_product_patent",
+    "patent_no": "US 12168067 B2",
+    "inventor_names": [
+        "Bodnar; Brian Scott",
+        "Donck; Simon Pierre",
+        "Suzuki; Jun",
+        "Wang; Cherry"
+    ],
+    "cpcc_codes": [
+        "A61K8/365",
+        "A61K8/731",
+        "A61K8/347",
+        "A61K8/498",
+        "A61K8/602",
+        "A61K2800/522",
+        "A61Q19/00",
+        "A61Q17/00",
+        "A61K2800/30",
+        "A61K2800/48"
+    ],
+    "assignee": "L'OREAL",
+    "task_type": "product discover workflow",
+    "properties": {
+        "product_name": "Advanced Antioxidant Skincare Serum",
+        "description": "This innovative skincare serum harnesses the power of natural antioxidants, such as polydatin, luteolin, and various flavonoids, to combat oxidative stress and environmental damage, effectively preventing skin aging and promoting overall skin health. Formulated with photostable compounds and stabilizers, it ensures enhanced protection against UV radiation while maintaining the integrity of keratinous tissues, making it ideal for daily use in sun care and pollution defense.",
+        "functional_roles": {
+            "Active Ingredient": [
+                {
+                    "chemical": "Polydatin",
+                    "weight": "0.05% to 5.00%"
+                },
+                {
+                    "chemical": "Caffeic acid",
+                    "weight": "0.2% to 2.0%"
+                },
+                {
+                    "chemical": "Luteolin",
+                    "weight": "0.2% to 2.0%"
+                },
+                {
+                    "chemical": "Hesperidine",
+                    "weight": "0.4% to 2.0%"
+                },
+                {
+                    "chemical": "Sodium tetracarboxymethylchalcone",
+                    "weight": "0.4% to 2.0%"
+                },
+                {
+                    "chemical": "Mangiferin",
+                    "weight": "0.25% to 2.0%"
+                },
+                {
+                    "chemical": "Ferulic acid",
+                    "weight": "0.2% to 2.0%"
+                },
+                {
+                    "chemical": "Caffeine",
+                    "weight": "1%"
+                },
+                {
+                    "chemical": "Acetyl trifluoromethylphenyl valylglycine",
+                    "weight": "Not specified"
+                }
+            ],
+            "Photoisomerization Stabilizer": [
+                {
+                    "chemical": "Sodium tetracarboxymethylchalcone",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Glycosyl Hesperidin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Hesperetin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Hesperidine",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Silymarin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Taxifolin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Apigenin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Baicalein",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Baicalin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Luteolin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Quercetin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Hydroxycinnamate",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Ferulic acid",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Oryzanol",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "p-Coumaric acid",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Mangiferin",
+                    "weight": "0.1% to 2.5%"
+                },
+                {
+                    "chemical": "Flavonoids",
+                    "weight": "36.7%"
+                },
+                {
+                    "chemical": "Flavanols",
+                    "weight": "0.4%"
+                },
+                {
+                    "chemical": "Epigallocatechine gallate",
+                    "weight": "0.4%"
+                },
+                {
+                    "chemical": "Flavanones",
+                    "weight": "33.4%"
+                },
+                {
+                    "chemical": "Glycosyl Hesperidin",
+                    "weight": "31.0%"
+                },
+                {
+                    "chemical": "Hesperetin",
+                    "weight": "30.6%"
+                },
+                {
+                    "chemical": "Hesperidine",
+                    "weight": "41.6%"
+                },
+                {
+                    "chemical": "Flavanonols",
+                    "weight": "27.8%"
+                },
+                {
+                    "chemical": "Silymarin",
+                    "weight": "22.6%"
+                },
+                {
+                    "chemical": "Taxifolin",
+                    "weight": "38.3%"
+                },
+                {
+                    "chemical": "Flavones",
+                    "weight": "54.4%"
+                },
+                {
+                    "chemical": "Apigenin",
+                    "weight": "66.7%"
+                },
+                {
+                    "chemical": "Baicalein",
+                    "weight": "42.9%"
+                },
+                {
+                    "chemical": "Baicalin",
+                    "weight": "32.3%"
+                },
+                {
+                    "chemical": "Luteolin",
+                    "weight": "63.3%"
+                },
+                {
+                    "chemical": "Flavonols",
+                    "weight": "24.8%"
+                },
+                {
+                    "chemical": "Quercetin",
+                    "weight": "24.8%"
+                },
+                {
+                    "chemical": "Hydroxycinnamates",
+                    "weight": "43.8%"
+                },
+                {
+                    "chemical": "Ferulic acid",
+                    "weight": "35.5%"
+                },
+                {
+                    "chemical": "Oryzanol",
+                    "weight": "57.2%"
+                },
+                {
+                    "chemical": "p-coumaric acid",
+                    "weight": "38.6%"
+                },
+                {
+                    "chemical": "Xanthonoids",
+                    "weight": "44.6%"
+                }
+            ],
+            "Carrier": [
+                {
+                    "chemical": "Water",
+                    "weight": "45% to 55%"
+                },
+                {
+                    "chemical": "Alcohol",
+                    "weight": "35% to 40%"
+                },
+                {
+                    "chemical": "Glycol",
+                    "weight": "0.5% to 10% or 1% to 20%"
+                },
+                {
+                    "chemical": "Glycerin",
+                    "weight": "0.5% to 25%"
+                },
+                {
+                    "chemical": "Alcohol Denat.",
+                    "weight": "39.2%"
+                },
+                {
+                    "chemical": "Dipropylene Glycol",
+                    "weight": "2.5%"
+                },
+                {
+                    "chemical": "Pentylene Glycol",
+                    "weight": "2.5%"
+                },
+                {
+                    "chemical": "Monoalcohol",
+                    "weight": "35% to 40%"
+                }
+            ],
+            "Additive": [
+                {
+                    "chemical": "Thickener (Natural and Synthetic Polymers)",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Hydroxypropyl methylcellulose",
+                    "weight": "0.05% to 5%"
+                },
+                {
+                    "chemical": "Various additives",
+                    "weight": "Not specified"
+                }
+            ],
+            "Essential Oil": [
+                {
+                    "chemical": "Sunflower oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Sesame oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Peppermint oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Macadamia nut oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Tea tree oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Evening primrose oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Sage oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Rosemary oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Coriander oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Thyme oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Pimento berries oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Rose oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Anise oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Balsam oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Bergamot oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Rosewood oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Cedar oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Chamomile oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Clove oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Cypress oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Eucalyptus oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Fennel oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Sea fennel oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Frankincense oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Geranium oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Ginger oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Grapefruit oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Jasmine oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Juniper oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Lavender oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Lemon oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Lemongrass oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Lime oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Mandarin oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Marjoram oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Myrrh oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Neroli oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Orange oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Patchouli oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Pepper oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Black pepper oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Petitgrain oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Pine oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Rose otto oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Sandalwood oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Spearmint oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Spikenard oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Vetiver oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Wintergreen oil",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Ylang ylang",
+                    "weight": "Not specified"
+                }
+            ],
+            "Fruit Extract": [
+                {
+                    "chemical": "Pyrus malus (Apple) Fruit Extract",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Aloe Barbadensis Leaf Juice Powder",
+                    "weight": "Not specified"
+                }
+            ],
+            "Acid": [
+                {
+                    "chemical": "Citric acid",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Sodium chloride",
+                    "weight": "Not specified"
+                }
+            ],
+            "Additional Antioxidant": [
+                {
+                    "chemical": "Various antioxidants",
+                    "weight": "0.01% to 20%"
+                },
+                {
+                    "chemical": "Various antioxidants",
+                    "weight": "0.1% to 20%"
+                },
+                {
+                    "chemical": "Various antioxidants",
+                    "weight": "0.01% to 2%"
+                }
+            ],
+            "Thickener": [
+                {
+                    "chemical": "Thickener (Natural and Synthetic Polymers)",
+                    "weight": "from about 0.1% to about 5%"
+                },
+                {
+                    "chemical": "Hydroxypropyl methylcellulose",
+                    "weight": "about 0.5%"
+                }
+            ],
+            "Cosmetically Acceptable Additive": [
+                {
+                    "chemical": "Colorants",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Preservatives",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Fragrances",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Dyes",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Neutralizing agents",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "pH-adjusting agents",
+                    "weight": "Not specified"
+                }
+            ],
+            "Additional Additive": [
+                {
+                    "chemical": "Various additives",
+                    "weight": "Not specified"
+                }
+            ]
+        }
+    }
+}

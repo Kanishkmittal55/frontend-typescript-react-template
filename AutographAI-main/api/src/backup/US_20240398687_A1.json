@@ -1,0 +1,545 @@
+{
+    "type": "cosmetic_product_patent",
+    "patent_no": "US 20240398687 A1",
+    "inventor_names": [
+        "I-fan Hsieh",
+        "Ramakrishnan Hariharan"
+    ],
+    "cpcc_codes": [
+        "A61Q3/02",
+        "A61K8/87",
+        "A45D29/00",
+        "A61K8/41",
+        "A61K8/731",
+        "A61K8/86",
+        "A61K8/042",
+        "A61K8/55",
+        "A61K8/8147",
+        "A61K8/8152",
+        "A61K2800/95",
+        "A61K2800/43",
+        "A61K2800/592",
+        "A61K2800/81",
+        "A61K2800/594"
+    ],
+    "assignee": "L\u2019OR\u00c9AL",
+    "task_type": "product discover workflow",
+    "properties": {
+        "product_name": "Multifunctional UV-Curable Nail Gel",
+        "description": null,
+        "functional_roles": {
+            "UV-Curable Material": [
+                {
+                    "chemical": "Difunctional Acrylate Oligomer",
+                    "weight": "5-25%"
+                },
+                {
+                    "chemical": "Urethane Acrylate Monomer",
+                    "weight": "8-15%"
+                },
+                {
+                    "chemical": "Pyromellitic Dimethacrylate",
+                    "weight": "2-8%"
+                },
+                {
+                    "chemical": "Photoinitiator (Ethyl Trimethylbenzoyl Phenylphosphinate)",
+                    "weight": "3-6%"
+                },
+                {
+                    "chemical": "Polymerizable (meth)acrylate",
+                    "weight": "2-8%"
+                },
+                {
+                    "chemical": "Polymerizable Monofunctional (meth)acrylates",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Polymerizable Difunctional (meth)acryloyl esters",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Polymerizable Tri(meth)acrylates",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Trimethylol Propane Tri(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Ethoxylated Glycerin Tri(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Ethoxylated Trimethylolpropane Tri(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Ditriethylol Propane Tetra(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Pentaerythritol Tri(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Pentaerythritol Tetra(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Propoxylated Pentaerythritol Tetra(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Ethoxylated Pentaerythritol Tetra(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Dipentaerythritol Hexa(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Dipentaerythritol Penta(meth)acrylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Ethoxylated Isocyanuric Acid Tri(meth)acrylates",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "(Meth)acrylic Acid",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Bis(glyceryl Dimethacrylate) Pyromellitate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Methacryloyloxyethyl Phthalate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Methacryloyloxyethyl Maleate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "2 Hydroxyethyl Methacrylate/Succinate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "1,3 Glyceryl Dimethacrylate Maleate Adduct",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "1,3 Glyceryl Dimethacrylate Succinate Adduct",
+                    "weight": "unspecified"
+                }
+            ],
+            "Solvent": [
+                {
+                    "chemical": "Solvents",
+                    "weight": "50-70%"
+                },
+                {
+                    "chemical": "Acetate Compounds",
+                    "weight": "at least 30% by weight"
+                },
+                {
+                    "chemical": "C2-C5 Monoalcohols (e.g., Isopropanol, Ethanol)",
+                    "weight": "no more than 10%"
+                },
+                {
+                    "chemical": "Volatile Oil (e.g., Isododecane)",
+                    "weight": "no more than 5%"
+                },
+                {
+                    "chemical": "Benzoic Acid Derivative",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Citric Acid Derivative",
+                    "weight": "0.5% - 8%"
+                },
+                {
+                    "chemical": "Isobutyrate Derivative",
+                    "weight": "0.5% - 8%"
+                }
+            ],
+            "Film Forming Agent": [
+                {
+                    "chemical": "Nitrocellulose",
+                    "weight": "5% - 15%"
+                },
+                {
+                    "chemical": "Cellulose Acetate Butyrate",
+                    "weight": "5% - 15%"
+                },
+                {
+                    "chemical": "Acrylates Copolymer",
+                    "weight": "0.5% - 3%"
+                },
+                {
+                    "chemical": "Acrylates/Isobornyl Acrylate Copolymer",
+                    "weight": "0.5% - 3%"
+                },
+                {
+                    "chemical": "Epoxy Resin (Tosylamide Epoxy Resin)",
+                    "weight": "5%-10%"
+                },
+                {
+                    "chemical": "Co-film forming agents",
+                    "weight": "up to 10%"
+                }
+            ],
+            "Colorant": [
+                {
+                    "chemical": "Colorant",
+                    "weight": "0.01% to 10%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "0.1% to 5%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "0.5% to 2%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "less than 1%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "less than 20%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "less than 15%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "less than 10%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "less than 5%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "at least 0.01%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "at least 1%"
+                },
+                {
+                    "chemical": "Colorant",
+                    "weight": "at least 5%"
+                }
+            ],
+            "Additional Component": [
+                {
+                    "chemical": "Filler",
+                    "weight": "no more than 2%"
+                },
+                {
+                    "chemical": "pH Adjusting Agent",
+                    "weight": "no more than 1%"
+                },
+                {
+                    "chemical": "UV Absorbing Agent",
+                    "weight": "no more than 1%"
+                },
+                {
+                    "chemical": "UV absorbing agent(s)",
+                    "weight": "no more than 1% by weight"
+                },
+                {
+                    "chemical": "UV absorbing agent(s)",
+                    "weight": "no more than 0.5% by weight"
+                },
+                {
+                    "chemical": "UV absorbing agent(s)",
+                    "weight": "no more than 0.1% by weight"
+                },
+                {
+                    "chemical": "pH adjuster(s)",
+                    "weight": "no more than 1% by weight"
+                },
+                {
+                    "chemical": "pH adjuster(s)",
+                    "weight": "no more than 0.5% by weight"
+                },
+                {
+                    "chemical": "pH adjuster(s)",
+                    "weight": "no more than 0.1% by weight"
+                }
+            ],
+            "Filler": [
+                {
+                    "chemical": "Ethyl methacrylate/glycol dimethacrylate crosspolymer",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Vinyl dimethicone/methicone silsesquioxane crosspolymer",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Methyl methacrylate crosspolymer",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Nylon-12",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Polyamides",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Polyethylene",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Talc",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Titanium dioxide",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Silica",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Aluminum starch octenylsuccinate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Clays",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Polymethylsilsesquioxane",
+                    "weight": "unspecified"
+                }
+            ],
+            "UV Absorbing Agent": [
+                {
+                    "chemical": "Menthyl anthranilate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Butyl methoxydibenzoylmethane",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Isopropyl dibenzoylmethane",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Ethylhexyl methoxycinnamate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Isopropyl methoxycinnamate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Isopropoxy methoxycinnamate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Isoamyl methoxycinnamate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Cinoxate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "DEA methoxycinnamate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Diisopropyl methylcinnamate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Glyceryl ethylhexanoate dimethoxycinnamate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Homosalate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Ethylhexyl salicylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Glycol salicylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Butyloctyl salicylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Phenyl salicylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Dipropyleneglycol salicylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "TEA salicylate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "3-benzylidene camphor",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "4-methylbenzylidene camphor",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzylidene camphor sulfonic acid",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Camphor benzalkonium methosulfate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Polyacrylamidomethyl benzylidene camphor",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzophenone-1",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzophenone-2",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzophenone-3",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzophenone-4",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzophenone-5",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzophenone-6",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzophenone-8",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Benzophenone-9",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "dihydroxy dimethoxy benzophenonedisulfonate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "benzophenone-12",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "n-hexyl 2-(4-diethylamino-2-hydroxybenzoyl)benzoate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Octocrylene",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Etocrylene",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Diethylhexyl butamido triazone",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "2,4,6-tris(dineopentyl 4\u2032-aminobenzalmalonate)-s-triazine",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "bis-ethylhexyloxyphenol methoxyphenyl triazine",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "ethylhexyl triazone",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "(2H-benzotriazole-2-yl)-6-dodecyl-4-methylphenol",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "dineopentyl 4\u2032-methoxybenzalmalonate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "polyorganosiloxane comprising benzalmalonate functional groups",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Ethylhexyl dimethoxybenzylidene dioxoimidazoline propionate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "2,2\u2032-methylenebis[6-(2H-benzotriazol-2-yl)-4-methyl-phenol]",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "2,2\u2032-methylenebis[6-(2H-benzotriazol-2-yl)-4-(1,1,3,3-tetramethylbutyl)phenol]",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "Drometrizole trisiloxane",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "2,4-bis[5-1(dimethylpropyl)benzoxazol-2-yl-(4-phenyl)imino]-6-(2-ethylhexyl)imino-1,3,5-triazine",
+                    "weight": "unspecified"
+                }
+            ],
+            "pH Adjuster": [
+                {
+                    "chemical": "sodium metasilicate",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "silicate compounds",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "citric acid",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "ascorbic acid",
+                    "weight": "unspecified"
+                },
+                {
+                    "chemical": "carbonate compounds",
+                    "weight": "unspecified"
+                }
+            ]
+        }
+    }
+}

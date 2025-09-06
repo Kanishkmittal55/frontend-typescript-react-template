@@ -1,0 +1,52 @@
+{
+    "type": "cosmetic_product_patent",
+    "patent_no": "US 20240398684 A1",
+    "inventor_names": [
+        "Praful Gulab Rao Lahorkar",
+        "Rajkumar Perumal",
+        "Ashish Anant Vaidya"
+    ],
+    "cpcc_codes": [
+        "A61Q19/10",
+        "A61Q17/04",
+        "A61K8/466",
+        "A61K8/4946",
+        "A61K2800/592"
+    ],
+    "assignee": "Conopco, Inc., d/b/a UNILEVER",
+    "task_type": "product discover workflow",
+    "properties": {
+        "product_name": "Advanced Cleansing Surfactant Formula",
+        "description": "This innovative cleansing formula features a balanced composition of anionic and amphoteric surfactants, including sodium lauryl ether sulfate and betaine, designed to effectively cleanse the skin while maintaining its natural moisture. Enhanced with potassium and sulfates, this product offers UV protection and neutralizing properties, making it suitable for topical application in various cosmetic formulations.",
+        "functional_roles": {
+            "Sunscreen Agent": [
+                {
+                    "chemical": "Water-soluble sunscreens (acid form)",
+                    "weight": "Not specified"
+                },
+                {
+                    "chemical": "Neutralising agent (inorganic or organic alkali)",
+                    "weight": "0.05% to 4%"
+                }
+            ],
+            "Surfactant": [
+                {
+                    "chemical": "Anionic surfactant (alkyl sulphate and/or ethoxylated alkyl sulfate)",
+                    "weight": "3% to 80%"
+                },
+                {
+                    "chemical": "Anionic surfactant (alkyl sulfate)",
+                    "weight": "1% to 20%"
+                },
+                {
+                    "chemical": "Sodium lauryl ether sulfate (SLES)",
+                    "weight": "Average degree of ethoxylation from 0.5 to 3"
+                },
+                {
+                    "chemical": "Cocamidopropyl betaine (CAPB)",
+                    "weight": "0.1% to 10% (preferably 0.5% to 8%, more preferably 1% to 5%)"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,1885 @@
+stage,chunk_number,system_prompt,input_chunk_text,nodes,relationships
+Extraction,1,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+",DOCUMENT ID  US 20240398687 A1  DATE  PUBLISHED  2024-12-05  INVENTOR INFORMATION  NAME   CITY   STATE   ZIP CODE   COUNTRY  HSIEH; I-fan   Scotch Plains   NJ   N/A   US  HARIHARAN; Ramakrishnan   Springfield   NJ   N/A   US  ASSIGNEE INFORMATION  NAME  L’ORÉAL  CITY  Paris  STATE  N/A  ZIP CODE  N/A  COUNTRY  FR  TYPE CODE  03  APPLICATION NO  18/679749  DATE FILED  2024-05-31  FOREIGN APPLICATION PRIORITY DATA  COUNTRY   APPLICATION NO   APPLICATION DATE  FR   2308063   2023-07-26  CPC CURRENT  TYPE   CPC   DATE  CPCI   A   61   Q   3 / 02   2013-01-01  CPCI   A   61   K   8 / 87   2013-01-01  CPCI   A   45   D   29 / 00   2013-01-01  CPCI   A   61   K   8 / 41   2013-01-01  CPCI   A   61   K   8 / 731   2013-01-01  CPCI   A   61   K   8 / 86   2013-01-01  CPCI   A   61   K   8 / 042   2013-01-01  CPCI   A   61   K   8 / 55   2013-01-01  CPCI   A   61   K   8 / 8147   2013-01-01  CPCI   A   61   K   8 / 8152   2013-01-01  CPCA   A   61   K   2800 / 95   2013-01-01  CPCA   A   61   K,"[{'name': 'HSIEH', 'label': 'Person', 'properties': {'name': 'I-fan', 'city': 'Scotch Plains', 'state': 'NJ'}}, {'name': 'HARIHARAN', 'label': 'Person', 'properties': {'name': 'Ramakrishnan', 'city': 'Springfield', 'state': 'NJ'}}, {'name': 'L’ORÉAL', 'label': 'Organization', 'properties': {}}, {'name': '2308063', 'label': 'Application', 'properties': {}}, {'name': 'US', 'label': 'Country', 'properties': {}}, {'name': 'FR', 'label': 'Country', 'properties': {}}, {'name': '03', 'label': 'TypeCode', 'properties': {}}, {'name': '18/679749', 'label': 'ApplicationNo', 'properties': {}}]","[{'start': 'HSIEH', 'end': 'HARIHARAN', 'type': 'from Inventor', 'properties': {'country': 'US'}}, {'start': 'L’ORÉAL', 'end': '2308063', 'type': 'to Assignee', 'properties': {}}, {'start': '2308063', 'end': 'US', 'type': 'filed On', 'properties': {}}, {'start': 'HSIEH', 'end': 'FR', 'type': 'has Country of Origin', 'properties': {'country': 'N/A'}}, {'start': 'HARIHARAN', 'end': 'US', 'type': 'has Country of Origin', 'properties': {'country': 'N/A'}}]"
+Extraction,2,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","2800 / 43   2013-01-01  CPCA   A   61   K   2800 / 592   2013-01-01  CPCA   A   61   K   2800 / 81   2013-01-01  CPCA   A   61   K   2800 / 594   2013-01-01  HYBRID NAIL COMPOSITION  DOMESTIC PRIORITY (CONTINUITY DATA)  us-provisional-application US 63469992 20230531  US CLASS CURRENT:  1 / 1
+KWIC Hits  Abstract  A hybrid cosmetic nail composition may be provided. The composition may include an ultraviolet  (UV) gel portion, and a solvent-based portion. The UV gel portion may include a plurality of UV-  curable materials and a photoinitiator. The plurality of UV-curable materials may be present in a  total amount of at least 19% by weight of the cosmetic nail composition, and the plurality of UV-  curable materials may include a difunctional acrylate oligomer. The solvent-based portion may  include a plurality of solvents.  Background/Summary  CROSS-REFERENCE TO RELATED APPLICATIONS  [0001] The present application claims priority to U.S. Provisional Patent Application No.  63/469,992, filed May 31, 2023, and French Patent application Serial No. FR 2308063, filed Jul.  26, 2023, the contents of which are each incorporated by reference herein in its entirety.  TECHNICAL FIELD  [0002] The present disclosure is drawn to nail compositions, such as UV-curable nail compositions.  BACKGROUND  [0003] Cosmetic nail formulations ideally satisfy numerous consumer needs and desires. For  example, it is often desired for nail formulations to have a target color, be able to be used for an  extended period of time (e.g., a 2-week wear period, where the color does not substantially change  and with high chip resistance), while also being easy to remove. Many features are thought to be  technically incompatible. Formulators end up accepting trade-offs to achieve different goals. For  example, a formulator may need to use an ingredient which may cause irritation, but causes the  formula to last longer on the nails. Such trade-offs are undesirable.  [0004] Thus, what is needed is a s","[{'name': 'patent-US-63469992', 'label': 'Patent', 'properties': {'application_date': '2023-05-31', 'status': 'provisional'}}, {'name': 'france-2308063', 'label': 'Patent', 'properties': {'application_date': '2023-07-26'}}, {'name': 'us-provisional-application', 'label': 'Application', 'properties': {}}, {'name': 'hybrid-cosmetic-nail-composition', 'label': 'Composition', 'properties': {'type': 'cosmetic'}}, {'name': 'difunctional-acrylate-oligomer', 'label': 'Material', 'properties': {}}, {'name': 'us-class-current', 'label': 'Classification', 'properties': {}}, {'name': 'CPCA', 'label': 'Classification', 'properties': {}}, {'name': 'KWIC Hits', 'label': 'Document', 'properties': {}}, {'name': 'Abstract', 'label': 'Section', 'properties': {}}, {'name': 'Background/Summary', 'label': 'Section', 'properties': {}}, {'name': 'TECHNICAL FIELD', 'label': 'Section', 'properties': {}}, {'name': 'CROSS-REFERENCE TO RELATED APPLICATIONS', 'label': 'Reference', 'properties': {}}]","[{'start': 'us-provisional-application', 'end': 'patent-US-63469992', 'type': 'prioritizes', 'properties': {}}, {'start': 'france-2308063', 'end': 'patent-US-63469992', 'type': 'prioritizes', 'properties': {}}, {'start': 'hybrid-cosmetic-nail-composition', 'end': 'UV-gel-portion', 'type': 'includes', 'properties': {}}, {'start': 'hybrid-cosmetic-nail-composition', 'end': 'solvent-based-portion', 'type': 'includes', 'properties': {}}, {'start': 'hybrid-cosmetic-nail-composition', 'end': 'difunctional-acrylate-oligomer', 'type': 'includes', 'properties': {}}, {'start': 'plurality-of-UV-curable-materials', 'end': 'UV-gel-portion', 'type': 'comprises', 'properties': {}}, {'start': 'us-class-current', 'end': 'CPCA', 'type': 'classified-as', 'properties': {}}, {'start': 'KWIC Hits', 'end': 'Abstract', 'type': 'related-to', 'properties': {}}]"
+Extraction,3,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","afer color coat formulation that can still achieve a long use  period (e.g., 2 weeks of wear), and can be removed relatively easily.  BRIEF SUMMARY  [0005] A cosmetic nail composition may be provided. The cosmetic nail composition may include  an ultraviolet (UV) gel portion and a solvent-based portion. The UV gel portion may include a  plurality of UV-curable materials and a photoinitiator (which may be a type I photoinitiator, such as  ethyl trimethylbenzoyl phenylphosphinate). The plurality of UV-curable materials may be present in  a total amount of at least 19% by weight (such as 19-50%) of the cosmetic nail composition. The  solvent-based portion may include a plurality of solvents.  [0006] The plurality of UV-curable materials may include a difunctional acrylate oligomer. The  difunctional acrylate oligomer may be a urethane monomer, and the plurality of UV-curable  materials may include the urethane monomer (such as a urethane acrylate monomer) and a  polymerizable (meth)acrylate (such as pyromellitic dimethacrylate). The urethane acrylate  monomer may be present in an amount from 8-15% by weight of the composition, and the  pyromellitic dimethacrylate may be present in an amount from 2-8% by weight of the composition.  [0007] The UV gel portion may be present in a total amount of 19-50% by weight of the cosmetic  nail composition. The photoinitiator may be present in a total amount of 3-6% by weight of the  cosmetic nail composition.  [0008] The solvent-based portion may include at least one film forming agent. The at least one film  forming agent may include a cellulose agent (such as nitrocellulose and/or cellulose acetate  butyrate). The at least one film forming agent may include an acrylate film former (such as
+acrylates copolymer, acrylates/isobornyl acrylate copolymer, and/or tricyclodecanedimethanol  diacrylate). The at least one film forming agent may include one or more co-film forming agents  (such as adipic acid/neopentyl glycol/trimellitic anhy","[{'name': '0005', 'label': 'CosmeticNailComposition', 'properties': {}}, {'name': '0006', 'label': 'UVGelPortion', 'properties': {'type': 'UV-curable materials', 'photoinitiator': 'ethyl trimethylbenzoyl phenylphosphinate'}}, {'name': '0007', 'label': 'SolventBasedPortion', 'properties': {}}, {'name': '0008', 'label': 'FilmFormingAgent', 'properties': {}}]","[{'start': '0005', 'end': '0006', 'type': 'contains', 'properties': {}}, {'start': '0005', 'end': '0007', 'type': 'contains', 'properties': {}}, {'start': '0006', 'end': '0008', 'type': 'contains', 'properties': {'co-polymer': 'acrylates copolymer'}}, {'start': '0007', 'end': '0008', 'type': 'contains', 'properties': {'filmformer': 'tricyclodecanedimethanol diacrylate'}}]"
+Extraction,4,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","dride copolymer). The co-film forming agent  may include an epoxy resin (such as a tosylamide epoxy resin). In some embodiments, the  acrylate forming agent(s) may be present in a total amount, by weight, that is less than both the  total amount of co-film forming agent(s) and the total amount of the cellulose film forming agent(s).  [0009] The cosmetic nail composition may include a colorant. The composition may include at least  one additional component, the at least one additional component being present in a total amount of  no more than 5% by weight of the cosmetic nail composition. The cosmetic nail composition may  include a filler, a pH adjusting agent, a UV absorbing agent, or a combination thereof.  [0010] In a particular embodiments, (i) the plurality of UV-curable materials may include a first UV-  curable material and second UV-curable material, where the first UV-curable material may be  present in an amount of 8-15% by weight of the cosmetic nail composition, and the second UV-  curable material may be present in an amount of 2-8% by weight of the cosmetic nail composition,  (ii) the photoinitiator may be present in an amount of 2-8% by weight of the cosmetic nail  composition, (iii) the plurality of solvents may be present in a total amount of 50-70% by weight of  the cosmetic nail composition, (iv) the cosmetic nail composition may also include: (a) a plurality of  film formers that may be present in a total amount of 5-20% by weight of the cosmetic nail  composition, (b) a UV absorbing agent that may be present in a total amount of no more than 1%  by weight of the cosmetic nail composition, (c) a pH adjusting agent that may be present in a total  amount of no more than 1% by weight of the cosmetic nail composition, (d) a filler that may be  present in a total amount of no more than 2% by weight of the cosmetic nail composition, (e) an  epoxy resin that may be present in a total amount of no more than 10% by weight of the cosmetic  nail composition, and (f) a colorant that may be present in a total amount of no more than 2% by  weight of the cosmetic nail composition, where the cosmetic nail composition is substantially free of  all other materials.  [0011] In various aspects, a method for providing a nail composition with improved wear may be  utilized. The method may include applying a composition as disclosed herein to a nail, and curing  the composition by exposing the composition to an ultraviolet (UV) light.  Description  DETAILED D","[{'name': 'nail', 'label': 'Material', 'properties': {}}, {'name': 'cosmetic_nail_composition', 'label': 'Composition', 'properties': {}}, {'name': 'toosylamide_epoxy_resin', 'label': 'Co-film_forming_agent', 'properties': {'type': 'epoxy'}}, {'name': 'acrylate', 'label': 'Acrylate_forming_agent', 'properties': {'type': 'monomer'}}, {'name': 'cellulose', 'label': 'Cellulose_film_forming_agent', 'properties': {}}, {'name': 'colorant', 'label': 'Colorant', 'properties': {}}, {'name': 'filler', 'label': 'Filler', 'properties': {}}, {'name': 'pH_adjusting_agent', 'label': 'pH_Adjusting_Agent', 'properties': {}}, {'name': 'UV_absorbing_agent', 'label': 'UV_Absorbing_Agent', 'properties': {}}, {'name': 'photoinitiator', 'label': 'Photoinitiator', 'properties': {}}, {'name': 'solvent', 'label': 'Solvent', 'properties': {}}]","[{'start': 'nail', 'end': 'cosmetic_nail_composition', 'type': 'contains', 'properties': {}}, {'start': 'toosylamide_epoxy_resin', 'end': 'Co-film_forming_agent', 'type': 'is_type_of', 'properties': {}}, {'start': 'acrylate', 'end': 'Acrylate_forming_agent', 'type': 'is_type_of', 'properties': {}}, {'start': 'cellulose', 'end': 'Cellulose_film_forming_agent', 'type': 'is_type_of', 'properties': {}}, {'start': 'colorant', 'end': 'Colorant', 'type': 'is_type_of', 'properties': {}}, {'start': 'filler', 'end': 'Filler', 'type': 'is_type_of', 'properties': {}}, {'start': 'pH_adjusting_agent', 'end': 'pH_Adjusting_Agent', 'type': 'is_type_of', 'properties': {}}, {'start': 'UV_absorbing_agent', 'end': 'UV_Absorbing_Agent', 'type': 'is_type_of', 'properties': {}}, {'start': 'photoinitiator', 'end': 'Photoinitiator', 'type': 'is_type_of', 'properties': {}}, {'start': 'solvent', 'end': 'Solvent', 'type': 'is_type_of', 'properties': {}}, {'start': 'acrylate_forming_agent', 'end': 'toosylamide_epoxy_resin', 'type': 'is_combined_with', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'acrylate_forming_agent', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'toosylamide_epoxy_resin', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'cellulose', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'colorant', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'filler', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'pH_adjusting_agent', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'UV_absorbing_agent', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'photoinitiator', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'solvent', 'type': 'contains', 'properties': {}}, {'start': 'cosmetic_nail_composition', 'end': 'acrylate_forming_agent', 'type': 'has_percentage_of', 'properties': {'start': 8}}, {'start': 'cosmetic_nail_composition', 'end': 'toosylamide_epoxy_resin', 'type': 'has_percentage_of', 'properties': {'end': 15}}, {'start': 'cosmetic_nail_composition', 'end': 'cellulose', 'type': 'has_percentage_of', 'properties': {'start': 2}}, {'start': 'cosmetic_nail_composition', 'end': 'colorant', 'type': 'has_percentage_of', 'properties': {'end': 2}}, {'start': 'cosmetic_nail_composition', 'end': 'filler', 'type': 'has_percentage_of', 'properties': {'end': 5}}, {'start': 'cosmetic_nail_composition', 'end': 'pH_adjusting_agent', 'type': 'has_percentage_of', 'properties': {'end': 1}}, {'start': 'cosmetic_nail_composition', 'end': 'UV_absorbing_agent', 'type': 'has_percentage_of', 'properties': {'end': 1}}, {'start': 'cosmetic_nail_composition', 'end': 'photoinitiator', 'type': 'has_percentage_of', 'properties': {'end': 8}}]"
+Extraction,5,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","ESCRIPTION  [0012] The following description and drawings merely illustrate the principles of the invention. It will  thus be appreciated that those skilled in the art will be able to devise various arrangements that,  although not explicitly described or shown herein, embody the principles of the invention and are  included within its scope. Furthermore, all examples recited herein are principally intended  expressly to be only for illustrative purposes to aid the reader in understanding the principles of the  invention and the concepts contributed by the inventor(s) to furthering the art and are to be  construed as being without limitation to such specifically recited examples and conditions.  Additionally, the term, “or,” as used herein, refers to a non-exclusive or, unless otherwise indicated  (e.g., “or else” or “or in the alternative”). Also, the various embodiments described herein are not  necessarily mutually exclusive, as some embodiments can be combined with one or more other  embodiments to form new embodiments.  [0013] The numerous innovative teachings of the present application will be described with  particular reference to the presently preferred exemplary embodiments. However, it should be  understood that this class of embodiments provides only a few examples of the many  advantageous uses of the innovative teachings herein. In general, statements made in the  specification of the present application do not necessarily limit any of the various claimed  inventions. Moreover, some statements may apply to some inventive features but not to others.  Those skilled in the art and informed by the teachings herein will realize that the invention is also  applicable to various other technical areas or embodiments.  [0014] As used herein, the term “at least one” means one or more and thus includes individual  components as well as mixtures/combinations.
+[0015] Other than in the operating examples, or where otherwise indicated, all numbers expressing  quantities of ingredients and/or reaction conditions are to be understood as being modified in all  instances by the term “about,” meaning within 10% of the indicated number.  [0016] As used herein, the term “volatile” means having a flash point of less than about 100° C.  [0017] As used herein, the term “non-volatile” means having a flash point of greater than about  100° C.  [0018] As used herein, the term “anhydrous” means the compositions contain less than 1% water  (by weight). Preferably, anhydro","[{'name': 'John', 'label': 'Person', 'properties': {'name': 'John'}}, {'name': 'Doctor', 'label': 'Occupation', 'properties': {}}, {'name': 'Hospital', 'label': 'Location', 'properties': {}}, {'name': 'USA', 'label': 'Country', 'properties': {}}, {'name': 'New York', 'label': 'City', 'properties': {}}]","[{'start': 'John', 'end': 'Doctor', 'type': 'works_as', 'properties': {}}, {'start': 'John', 'end': 'Hospital', 'type': 'lives_in', 'properties': {}}, {'start': 'John', 'end': 'USA', 'type': 'is_from', 'properties': {}}, {'start': 'John', 'end': 'New York', 'type': 'was_born_in', 'properties': {}}]"
+Extraction,6,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","us compositions of the present invention contain less than 0.5%  water, and preferably no water.  [0019] As used herein, the term “substantially free of (a component)” means that the systems or  compositions contain no appreciable amount of the component, for example, no more than about  1% by weight, or no more than about 0.5% by weight, or no more than about 0.3% by weight, such  as no more than about 0.1% by weight, based on the weight of the composition.  [0020] As used herein, the term “essentially free of (a component)” means that the systems or  compositions contain no appreciable amount of the component, for example, no more than about  0.1% by weight, or no more than about 0.01% by weight, based on the weight of the composition.  [0021] As used herein, the term “free” or “completely free of (a component)” as defined herein  means that the systems or compositions do not contain the component in any measurable degree  by standard means.  [0022] The compositions and methods of the present invention can “comprise,” “consist of” or  “consist essentially of” the essential elements and limitations of the invention described herein, as  well as any additional or optional ingredients, components, or limitations described herein or  otherwise useful. For purposes of the compositions and methods of the present invention where  the invention “consists essentially of” the identified ingredients and/or process steps, the “basic and  novel property” of such compositions and/or methods is “a UV-curable nail composition with wear  performance and chip resistance comparable to conventional solvent-based nail formulations, that  is safer than conventional UV gel formulations.”  [0023] A cosmetic nail composition may be provided.  [0024] The disclosed compositions can be considered as combination of parts of a UV gel  formulation with parts of a solvent-based formulations. Specifically, the cosmetic nail composition  may include an UV gel portion and a solvent-based portion. The composition is preferably  substantially free, essentially free, or free of water. In a preferred embodiment, the composition is  an anhydrous composition.  UV Gel Portion.  [0025] The UV gel portion may include a plurality of UV-curable materials and a photoinitiator.  Preferably the UV gel portion consists of the UV-curable materials and the photoinitiator.  [0026] The UV gel portion may be present in a total amount of at least 19% by weight of the  cosmetic nail composition. In some embodi","[{'name': 'water', 'label': 'Component', 'properties': {}}, {'name': 'air', 'label': 'Component', 'properties': {}}, {'name': 'nail', 'label': 'Material', 'properties': {}}, {'name': 'UV-curable material', 'label': 'Material', 'properties': {}}, {'name': 'photoinitiator', 'label': 'Component', 'properties': {}}]","[{'start': 'nail', 'end': 'water', 'type': 'is_composed_of', 'properties': {}}, {'start': 'nail', 'end': 'air', 'type': 'is_composed_of', 'properties': {}}, {'start': 'nail', 'end': 'UV-curable material', 'type': 'consists_essentially_of', 'properties': {}}, {'start': 'nail', 'end': 'photoinitiator', 'type': 'consists_essentially_of', 'properties': {}}, {'start': 'nail', 'end': '{}', 'type': 'contains_no_water', 'properties': {}}, {'start': 'nail', 'end': 'UV-gel portion', 'type': 'is_composed_of', 'properties': {}}, {'start': 'UV-gel portion', 'end': 'UV-curable material', 'type': 'consists_of', 'properties': {}}, {'start': 'UV-gel portion', 'end': 'photoinitiator', 'type': 'contains', 'properties': {}}]"
+Extraction,7,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","ments, the UV gel portion may be present in a total  amount of 19-50% by weight of the cosmetic nail composition. In some embodiments, the UV gel  portion may be present in a total amount of 19-34% by weight of the cosmetic nail composition. In  some embodiments, the UV gel portion may be present in a total amount of 15-20% by weight of  the cosmetic nail composition. In some embodiments, the UV gel portion may be present in a total  amount of up to 50% by weight of the cosmetic nail composition. In some embodiments, the UV gel  portion may be present in a total amount of up to 45% by weight of the cosmetic nail composition.  In some embodiments, the UV gel portion may be present in a total amount of up to 40% by weight  of the cosmetic nail composition. In some embodiments, the UV gel portion may be present in a  total amount of up to 35% by weight of the cosmetic nail composition. In some embodiments, the  UV gel portion may be present in a total amount of up to 34% by weight of the cosmetic nail  composition. In some embodiments, the UV gel portion may be present in a total amount of up to  30% by weight of the cosmetic nail composition. In some embodiments, the UV gel portion may be
+present in a total amount of up to 25% by weight of the cosmetic nail composition. In some  embodiments, the UV gel portion may be present in a total amount of up to 20% by weight of the  cosmetic nail composition. In some embodiments, the UV gel portion may be present in a total  amount of at least 15% by weight of the cosmetic nail composition. In some embodiments, the UV  gel portion may be present in a total amount of at least 16% by weight of the cosmetic nail  composition. In some embodiments, the UV gel portion may be present in a total amount of at least  17% by weight of the cosmetic nail composition. In some embodiments, the UV gel portion may be  present in a total amount of at least 18% by weight of the cosmetic nail composition. In some  embodiments, the UV gel portion may be present in a total amount of at least 19% by weight of the  cosmetic nail composition. In some embodiments, the UV gel portion may be present in a total  amount of at least 20% by weight of the cosmetic nail composition.  UV-Curable Materials.  [0027] The plurality of UV-curable materials may include a difunctional acrylate oligomer.  [0028] The difunctional acrylate oligomer may include a urethane monomer. The urethane  monomer may be a urethane acrylate monomer. Examples of suitable uret","[{'name': 'uvcurematerial', 'label': 'UV-Curable Material', 'properties': {'type': 'oligomer'}}, {'name': 'difunctionalacrylate', 'label': 'Difunctional Acrylate', 'properties': {'structure': 'oligomer'}}, {'name': 'urethane', 'label': 'Urethane', 'properties': {}}, {'name': 'urethanemonomer', 'label': 'Urethane Monomer', 'properties': {'type': 'monomer'}}, {'name': 'urethananomonmer', 'label': 'Urethane Acrylate Monomer', 'properties': {}}]",[]
+Extraction,8,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","hane oligomers include  reactive multifunctional oligomers such as polyether urethane acrylates, allyl functional urethane,  polybutadiene urethane acrylates, polyethyelene-polybutylene urethane acrylates, and aliphatic or  aromatic urethane acrylates. One preferred embodiment utilized a urethane acrylates monomer.  [0029] The difunctional acylate oligomer may be present in a total amount of 5-25%. In some  embodiments, the difunctional acylate oligomer may be present in a total amount of 8-20%. In  some embodiments, the difunctional acylate oligomer may be present in a total amount of 10-15%.  [0030] The plurality of UV-curable materials may also include a polymerizable (meth)acrylate. In an  embodiment, the term “(meth)acrylate” refers to moieties having an acrylate (CH.sub.2═CHCOO  —) or a methacrylate (CH.sub.2═CMeCOO—) group. The polymerizable (meth)acrylate may be a  (meth)acrylic ester, which includes esters of acrylic and methacrylic acid.  [0031] Non-limiting examples of polymerizable monofunctional (meth)acrylates include methyl  (meth)acrylate, ethyl (meth)acrylate, hydroxypropyl (meth)acrylate, butyl (meth)acrylates, hydroxy  ethyl (meth)acrylates, butoxyethyl (meth)acrylate, diethylaminoethyl (meth)acrylate, 2-ethylhexyl  (meth)acrylate, ethoxyethyl (meth)acrylate, t-butyl aminoethyl (meth)acrylate, methoxyethylene  glycol (meth)acrylate, phosphoethyl(meth)acrylate, methoxy propyl (meth)acrylate, methoxy  polyethylene glycol(meth)acrylate, phenoxyethylene glycol","[{'name': 'hane oligomer', 'label': 'Material', 'properties': {'name': 'hane oligomer', 'description': 'reactive multifunctional oligomer'}}, {'name': 'polyether urethane acrylates', 'label': 'Material', 'properties': {'name': 'polyether urethane acrylates', 'description': 'reactive multifunctional oligomer'}}, {'name': 'allyl functional urethane', 'label': 'Material', 'properties': {'name': 'allyl functional urethane', 'description': 'reactive multifunctional oligomer'}}, {'name': 'polybutadiene urethane acrylates', 'label': 'Material', 'properties': {'name': 'polybutadiene urethane acrylates', 'description': 'reactive multifunctional oligomer'}}, {'name': 'polyethylene-polybutylene urethane acrylates', 'label': 'Material', 'properties': {'name': 'polyethylene-polybutylene urethane acrylates', 'description': 'reactive multifunctional oligomer'}}, {'name': 'aliphatic or aromatic urethane acrylates', 'label': 'Material', 'properties': {'name': 'aliphatic or aromatic urethane acrylates', 'description': 'reactive multifunctional oligomer'}}]","[{'start': 'hane oligomer', 'end': 'null', 'type': 'includes', 'properties': {}}, {'start': 'polyether urethane acrylates', 'end': 'null', 'type': 'includes', 'properties': {}}, {'start': 'allyl functional urethane', 'end': 'null', 'type': 'includes', 'properties': {}}, {'start': 'polybutadiene urethane acrylates', 'end': 'null', 'type': 'includes', 'properties': {}}, {'start': 'polyethylene-polybutylene urethane acrylates', 'end': 'null', 'type': 'includes', 'properties': {}}, {'start': 'aliphatic or aromatic urethane acrylates', 'end': 'null', 'type': 'includes', 'properties': {}}]"
+Extraction,9,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","(meth)acrylate, phenoxypolyethylene  glycol (meth)acrylate, 2-hydroxy-3-phenoxypropyl (meth)acrylate, 2-(meth)acryloxyethylsuccinic  acid, 2-(meth)acryloylethylphthalic acid, 2-(meth)acryloyloxypropylphthalic acid, stearyl  (meth)acrylate, isobornyl (meth)acrylate, 3-chloro-2-hydroxypropyl (meth)acrylates,  tetrahydrofurfuryl (meth)acrylate, methacryloyloxyethyl trimellitic anhydride, (meth)acrylamides and  allyl monomers.  [0032] Not limiting examples of polymerizable difunctional (meth)acryloyl esters include 1,4 butane  diol di(meth)acrylate, 1,6 hexanediol di(meth)acrylate, alkoxylated hexane diol di(meth)acrylate, 1,9  nonanediol di(meth)acrylate, 1,10 decanediol di(meth)acrylate, neopentyl glycol di(meth)acrylate,  alkoxylated neopentyl glycol di(meth)acrylate, 2-methyl-1,8-octane diol di(meth)acrylate,  cyclohexane dimethanol di(meth)acrylate, glycerin di(meth)acrylate, ethylene glycol  di(meth)acrylate, triethyleneglycol di(meth)acrylate, polyethylene glycol di(meth)acrylate, propylene  glycol di(meth)acrylate, polypropylene glycol di(meth)acrylate, ethoxylated propylene glycol  di(meth)acrylate, ethoxylated polypropylene glycol di(meth)acrylate, polyethoxypropoxy  di(meth)acrylate, ethoxylated bisphenol A di(meth)acrylate, propoxylated bisphenol A  di(meth)acrylate, propoxylated ethoxylated bisphenol A di(meth)acrylate, bisphenol A glycidyl  methacrylate, tricyclodecanedimethanol di(meth)acrylate, glycerin di(meth)acrylate, ethoxylated  glycerin di(meth)acrylate, bis","[{'name': 'methacrylate', 'label': 'ChemicalCompound', 'properties': {}}, {'name': 'phenoxypolyethylene glycol (meth)acrylate', 'label': 'ChemicalCompound', 'properties': {}}, {'name': '2-hydroxy-3-phenoxypropyl (meth)acrylate', 'label': 'ChemicalCompound', 'properties': {}}, {'name': '2-(meth)acryloxyethylsuccinic acid', 'label': 'ChemicalCompound', 'properties': {}}, {'name': '2-(meth)acryloylethylphthalic acid', 'label': 'ChemicalCompound', 'properties': {}}, {'name': '2-(meth)acryloyloxypropylphthalic acid', 'label': 'ChemicalCompound', 'properties': {}}, {'name': 'stearyl (meth)acrylate', 'label': 'ChemicalCompound', 'properties': {}}, {'name': 'isobornyl (meth)acrylate', 'label': 'ChemicalCompound', 'properties': {}}, {'name': '3-chloro-2-hydroxypropyl (meth)acrylates', 'label': 'ChemicalCompound', 'properties': {}}, {'name': 'tetrahydrofurfuryl (meth)acrylate', 'label': 'ChemicalCompound', 'properties': {}}, {'name': 'methacryloyloxyethyl trimellitic anhydride', 'label': 'ChemicalCompound', 'properties': {}}, {'name': '(meth)acrylamides', 'label': 'ChemicalCompound', 'properties': {}}, {'name': 'allyl monomers', 'label': 'ChemicalCompound', 'properties': {}}, {'name': '1', 'label': '4 butane diol di(meth)acrylate', 'properties': {}}, {'name': '1', 'label': '6 hexanediol di(meth)acrylate', 'properties': {}}, {'name': 'alkoxylated hexane diol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': '1', 'label': '9 nonanediol di(meth)acrylate', 'properties': {}}, {'name': '1', 'label': '10 decanediol di(meth)acrylate', 'properties': {}}, {'name': 'neopentyl glycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'alkoxylated neopentyl glycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': '2-methyl-1', 'label': '8-octane diol di(meth)acrylate', 'properties': {}}, {'name': 'cyclohexane dimethanol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'glycerin di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'ethylene glycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'triethyleneglycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'polyethylene glycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'propylene glycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'polypropylene glycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'ethoxylated propylene glycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'ethoxylated polypropylene glycol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'polyethoxypropoxy di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'ethoxylated bisphenol A di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'propoxylated bisphenol A di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'propoxylated ethoxylated bisphenol A di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'bisphenol A glycidyl methacrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'tricyclodecanedimethanol di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'glycerin di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'ethoxylated glycerin di(meth)acrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}, {'name': 'bisphenol A methacrylate', 'label': 'PolymerizableDifunctionalEsther', 'properties': {}}]",[]
+Extraction,10,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","acrylamides, bis allyl ethers and allyl(meth)acrylates.  [0033] Non-limiting examples of polymerizable tri- and/or higher (meth)acrylates include trimethylol  propane tri(meth)acrylate, ethoxylated glycerin tri(meth)acrylate, ethoxylated trimethylolpropane  tri(meth)acrylate, ditrimethylol propane tetra(meth)acrylate, pentaerythritol tri(meth)acrylate,  pentaerythritol tetra(meth)acrylate, propoxylated pentaerythritol tetra(meth)acrylate, ethoxylated
+pentaerythritol tetra(meth)acrylate, dipentaerythritol hexa(meth)acrylate, dipentaerythritol  penta(meth)acrylate and ethoxylated isocyanuric acid tri(meth)acrylates.  [0034] Non-limiting examples of polymerizable (meth)acrylates also includes monomers containing  acid groups, such as (meth)acrylic acid, bis(glyceryl dimethacrylate) pyromellitate, pyromellitic  dimethacrylate, methacryloyloxyethyl phthalate, methacryloyloxyethyl maleate, 2 hydroxyethyl  methacrylate/succinate, 1,3 glyceryl dimethacrylate maleate adduct, and 1,3 glyceryl  dimethacrylate succinate adduct.  [0035] In a preferred embodiment, pyromellitic dimethacrylate is utilized.  [0036] In some embodiments, the polymerizable (meth)acrylate may be present in a total amount  of 3-15% by weight of the cosmetic nail composition. In some embodiments, the polymerizable  (meth)acrylate may be present in a total amount of 4-10% by weight of the cosmetic nail  composition. In some embodiments, the ratio, by weight, of difunctional acylate oligomer to  polymerizable (meth)","[{'name': '0033', 'label': 'Chemical compound', 'properties': {}}, {'name': '0034', 'label': 'Chemical compound', 'properties': {}}, {'name': 'pyromellitic dimethacrylate', 'label': 'Chemical compound', 'properties': {}}]","[{'start': 'pyromellitic dimethacrylate', 'end': 'pyromellitic dimethacrylate', 'type': 'is utilized by', 'properties': {}}]"
+Extraction,11,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","acrylate is about 2:1.  Photoinitiator.  [0037] The photoinitiator may be a type I photoinitiator. Non-limiting examples of type I  photoinitiators include diphenyl-(2,4,6-trimethylbenzoyl)-phosphine oxide, ethyl(2,4,6-  trimethylbenzoyl)phenyl phosphinate, 2-benzyl-2-dimethylamino-1-(4-morpholinophenyl)-butan-1-  one, 2-Dimethylamino-2-(4-methyl-benzyl)-1-(4-morpholin-4-yl-phenyl)-butan-1-one and 2-methyl-  1-[4(methoxythio)-phenyl]-2-morpholinopropan-2-one. Combinations of type I photoinitiators may  also be used. A preferred photoinitiator is ethyl trimethylbenzoyl phenylphosphinate.  [0038] The photoinitiator may be present in a total amount of 3-6% by weight of the cosmetic nail  composition.  Solvent-Based Portion.  [0039] The solvent-based portion may include a plurality of solvents. The solvent-based portion  may include one or more film formers. The solvent-based portion may include a colorant. The  solvent-based portion may include one or more additional components, such as a UV absorbing  agent, a pH adjuster, and/or a filler.  [0040] The solvent-based portion may be present in a total amount of 65%, 70%, or 75% up to  80%, 83%, or 85% by weight of the composition. In some embodiments, the solvent-based portion  may be present in a total amount of 65% to 85% by weight of the composition. In some  embodiments, the solvent-based portion may be present in a total amount of 75% to 83% by  weight of the composition.  Solvents.  [0041] The solvent may be a part of an acetate-rich solvent system. “By acetate-rich solvent  system,” it is meant that the proportion of acetate compounds in the solvent system is at least  about 30% by weight, such as at least about 50% by weight, such as at least about 70% by weight,  such as at least about 80% by weight, such as at least about 85% by weight, where these  percentages are relative to all solvents in the composition.  [0042] The plurality of solvents may be present in a total amount of at least 50%, at least 55%, or  a","[{'name': '0037', 'label': 'Photoinitiator', 'properties': {'type': 'I'}}, {'name': '0038', 'label': 'Photoinitiator', 'properties': {}}, {'name': '0039', 'label': 'Solvent-Based Portion', 'properties': {}}, {'name': '0040', 'label': 'Solvent-Based Portion', 'properties': {}}, {'name': '0041', 'label': 'Acetate-Rich Solvent System', 'properties': {}}, {'name': '0024', 'label': 'Cosmetic Nail Composition', 'properties': {}}]","[{'start': '0037', 'end': '0038', 'type': 'Photoinitiator', 'properties': {}}, {'start': '0039', 'end': '0037', 'type': 'contains', 'properties': {}}, {'start': '0040', 'end': '0039', 'type': 'contains', 'properties': {}}, {'start': '0041', 'end': '0040', 'type': 'is part of', 'properties': {}}]"
+Extraction,12,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","t least 60% by weight of the cosmetic nail composition.  [0043] Suitable acetate compounds include, for example, C1-C4 alkyl acetates such as ethyl  acetate, propyl acetate, amyl acetate, and butyl acetate.  [0044] The solvents used may have a molecular weight less than or equal to 200. One or more of  the solvents (and preferably all of the solvents) may have a boiling point between 55° C. and 250°  C. In some embodiments, one or more of the solvents may have a boiling point between 120° C.  and 250° C.
+[0045] In some embodiments, the composition may include a plurality of acetate compounds. In  some embodiments, the plurality of acetate compounds may be present in a total amount of at  least 50% by weight of the composition. In one embodiment, two acetate compounds are each  present in an amount of at least 20% by weight of the composition, and any other acetate  compound is present in a total amount less than 1% by weight of the composition.  [0046] The plurality of solvents may include non-acetate compounds that assist in dissolving other  components in the system, such as, e.g., nitrocellulose and/or other film formers. This may include  C2-C5 monoalcohols such as isopropanol or ethanol. C2-C5 monoalcohols may be present in a  total amount no more than 10%, no more than 8%, no more than 6%, or no more than 4% by  weight of the composition.  [0047] The plurality of solvents may include a volatile oil. As used herein, the term “oil” means any  fatty substance in liquid form at room temperature (25° C.) and at atmospheric pressure (1.013.10  5 Pa). As used herein, the term “volatile oil” refers to an oil having in particular a non-zero vapor  pressure, at ambient temperature and atmospheric pressure, in particular having a vapor pressure  ranging from 2.66 Pa to 40,000 Pa), in particular ranging from 2.66 Pa to 13,000 Pa, and more  particularly ranging from 2.66 Pa to 1,300 Pa.  [0048] The volatile oil may be hydrocarbon-based and may be non-polar. Non-limiting ex","[{'name': 'acetate_compound', 'label': 'Acetate Compound', 'properties': {'structure': 'C1-C4 alkyl acetates'}}, {'name': 'ethyl_acetate', 'label': 'Acetate Compound', 'properties': {'structure': 'ethyl acetate'}}, {'name': 'propyl_acetate', 'label': 'Acetate Compound', 'properties': {'structure': 'propyl acetate'}}, {'name': 'amyl_acetate', 'label': 'Acetate Compound', 'properties': {'structure': 'amyl acetate'}}, {'name': 'butyl_acetate', 'label': 'Acetate Compound', 'properties': {'structure': 'butyl acetate'}}, {'name': 'solvent', 'label': 'Solvent', 'properties': {}}, {'name': 'isopropanol', 'label': 'Solvent', 'properties': {'structure': 'C2-C5 monoalcohol'}}, {'name': 'ethanol', 'label': 'Solvent', 'properties': {'structure': 'C2-C5 monoalcohol'}}, {'name': 'nitrocellulose', 'label': 'Solvent', 'properties': {'structure': 'film former'}}, {'name': 'volatile_oil', 'label': 'Volatile Oil', 'properties': {}}]","[{'start': 'acetate_compound', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'ethyl_acetate', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'propyl_acetate', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'amyl_acetate', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'butyl_acetate', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'solvent', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'isopropanol', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'ethanol', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'nitrocellulose', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}, {'start': 'volatile_oil', 'end': 'nail_composition', 'type': 'constituent_of', 'properties': {}}]"
+Extraction,13,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","amples of  volatile non-polar hydrocarbon oils include oils having from 8 to 16 carbon atoms, such as C8-C16  branched alkanes, such as isododecane, isodecane, and/or isohexadecane. In one embodiment,  the volatile oil is isododecane.  [0049] The volatile oil, if present, may be present in a total amount of no more than 5%, no more  than 4%, no more than 3%, no more than 2%, or no more than 1.5% by weight of the composition.  [0050] The plurality of solvents may include at least one benzoic acid derivative, citric acid  derivative, and/or isobutyrate derivative. In one embodiment, at least one benzoic acid derivative,  at least one citric acid derivative, and at least one isobutyrate derivative are present.  [0051] In certain embodiments, the benzoic acid derivative may be a dibenzoate ester, including  but not limited to diethylene glycol dibenzoate, dipropylene glycol dibenzoate, and 1,2-propylene  glycol dibenzoate.  [0052] In certain embodiments, the citric acid derivative may be an optionally hydroxylated triester  of a C2-C8 tricarboxylic acid and of a C2-C8 alcohol, such as citric acid esters, such as trioctyl  citrate, triethyl citrate, acetyl tributyl citrate, tributyl citrate or acetyl tributyl citrate.  [0053] In certain embodiments, the isobutyrate derivative may be a C1-C6 carboxylic acid ester of  sucrose such as sucrose acetate isobutyrate.  [0054] In certain embodiments, the at least one benzoic acid derivative, citric acid derivative,  and/or isobutyrate derivative may include dipropylene glycol dibenzoate, tributyl citrate, acetyl  tributyl citrate, and sucrose acetate isobutyrate.  [0055] The at least one benzoic acid derivative, citric acid derivative, and/or isobutyrate derivative  may be present in a total amount ranging from about 0.5%, 2% or 3% to about 3%, 4%, 5%, or 8%  by weight of the composition. In one embodiment, the total amount is 3%-4% by weight of the  composition.  Film Forming Agents.  [0056] The solvent-based portion may include","[{'name': 'C8-C16', 'label': 'TypeOfHydrocarbonOil', 'properties': {'branching': 'branched'}}, {'name': 'isododecane', 'label': 'TypeOfHydrocarbonOil', 'properties': {'number_of_carbons': 12}}, {'name': 'isodecane', 'label': 'TypeOfHydrocarbonOil', 'properties': {'number_of_carbons': 12}}, {'name': 'isohexadecane', 'label': 'TypeOfHydrocarbonOil', 'properties': {'number_of_carbons': 24}}, {'name': 'benzoic acid', 'label': 'Solvent', 'properties': {}}, {'name': 'citric acid', 'label': 'Solvent', 'properties': {}}, {'name': 'isobutyrate', 'label': 'Solvent', 'properties': {}}, {'name': 'diethylene glycol dibenzoate', 'label': 'TypeOfSolvent', 'properties': {'brand_name': 'none'}}, {'name': 'dipropylene glycol dibenzoate', 'label': 'TypeOfSolvent', 'properties': {'brand_name': 'none'}}, {'name': '1', 'label': '2-propylene glycol dibenzoate', 'properties': {'brand_name': 'none'}}, {'name': 'trioctyl citrate', 'label': 'TypeOfSolvent', 'properties': {}}, {'name': 'triethyl citrate', 'label': 'TypeOfSolvent', 'properties': {}}, {'name': 'acetyl tributyl citrate', 'label': 'TypeOfSolvent', 'properties': {}}, {'name': 'tributyl citrate', 'label': 'TypeOfSolvent', 'properties': {}}, {'name': 'tricarboxylic acid', 'label': 'TypeOfSolvent', 'properties': {'chemical_formula': 'CnH2n-2O4'}}, {'name': 'alcohol', 'label': 'TypeOfSolvent', 'properties': {}}, {'name': 'sucrose acetate isobutyrate', 'label': 'TypeOfSolvent', 'properties': {}}, {'name': 'film forming agent', 'label': 'FilmFormingAgent', 'properties': {}}, {'name': 'dipropylene glycol', 'label': 'Component', 'properties': {'chemical_formula': 'C3H8O2'}}]","[{'start': 'benzoic acid', 'end': 'citric acid', 'type': 'solvent', 'properties': {}}, {'start': 'citric acid', 'end': 'isobutyrate', 'type': 'solvent', 'properties': {}}, {'start': 'isobutyrate', 'end': 'film forming agent', 'type': 'solvent', 'properties': {}}]"
+Extraction,14,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","at least one film forming agent. The at least one film  forming agent may be present in a total amount of 5%-15% by weight of the composition. In some  embodiments, the film forming agent(s) may be present in a total amount of less than (or  alternatively no more than) 10% by weight of the composition, such as 6%-10% by weight of the  composition.  [0057] The at least one film forming agent may include a cellulose film forming agent, an acrylate  film forming agent, and/or a co-film forming agent.
+[0058] Non-limiting examples of the cellulose film forming agent includes nitrocellulose,  ethylcellulose, cellulose acetate, cellulose acetate butyrate, cellulose acetate propionate, or  mixtures thereof.  [0059] In some embodiments, a plurality of cellulose film forming agents are present. In some  embodiments, a single cellulose film forming agent is present. The cellulose film forming agent(s)  may be present in a total amount of 6%-10% by weight of the composition, such as 7%-9%.  [0060] Non-limiting examples of acrylate film forming agents include acrylates copolymer,  acrylates/isobornyl acrylate copolymer, acrylic acid/isobutyl acrylate/isobornyl acrylate copolymer,  acrylates/stearyl methacrylate copolymer, acrylate/trimethyl polysiloxymethacrylate,  acrylates/dimethicone copolymer, octylacrylamide/acrylates/butylaminoethyl methacrylate  copolymer, VA/butyl maleate/isobornyl acrylate copolymer, acrylates/t-butylacrylamide copolymer,  and acrylates/dimethylaminoethyl methacrylate copolymer. In one embodiment, the acrylate  polymer includes acrylates copolymer and acrylates/isobornyl acrylate copolymer.  [0061] The acrylate film forming agent(s) may be present in a total amount of 0.5%, 1%, or 1.5% up  to 2%, 2.5%, or 3% by weight of the composition. In one embodiment, a plurality of acrylate film  forming agents are present, where the first acrylate film forming agent being present in an amount  of at least 1.5% by weight of the composition, and the composition is","[{'name': 'film-forming-agent', 'label': 'Material', 'properties': {'type': 'cellulose', 'acrylate': False}}, {'name': 'film-forming-agent', 'label': 'Material', 'properties': {'type': 'acrylate', 'cellulose': False}}, {'name': 'film-forming-agent', 'label': 'Material', 'properties': {'type': 'co-film-forming-agent', 'cellulose': False, 'acrylate': False}}, {'name': 'cellulose', 'label': 'Material', 'properties': {'name': 'nitrocellulose', 'description': ''}}, {'name': 'cellulose', 'label': 'Material', 'properties': {'name': 'ethylcellulose', 'description': ''}}, {'name': 'cellulose', 'label': 'Material', 'properties': {'name': 'cellulose-acetate', 'description': ''}}, {'name': 'cellulose', 'label': 'Material', 'properties': {'name': 'cellulose-acetate-butrate', 'description': ''}}, {'name': 'cellulose', 'label': 'Material', 'properties': {'name': 'cellulose-acetate-propionate', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'acrylates-copolymer', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'acrylates-isobornyl-acrylate-copolymer', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'acrylic-acid-isobutyl-acrylate-isobornyl-acrylate-copolymer', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'acrylates-stearyl-methacrylate-copolymer', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'acrylate-trimethyl-polysiloxymethacrylate', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'acrylates-dimethicone-copolymer', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'octylacrylamide-acrylates-butylaminoethyl-methacrylate-copolymer', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'VA-butyl-maleate-isobornyl-acrylate-copolymer', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'acrylates-t-butylacrylamide-copolymer', 'description': ''}}, {'name': 'acrylate', 'label': 'Material', 'properties': {'name': 'acrylates-dimethylaminoethyl-methacrylate-copolymer', 'description': ''}}]","[{'start': 'film-forming-agent', 'end': 'film-forming-agent', 'type': 'part-of', 'properties': {}}, {'start': 'cellulose', 'end': 'film-forming-agent', 'type': 'part-of', 'properties': {}}, {'start': 'acrylate', 'end': 'film-forming-agent', 'type': 'part-of', 'properties': {}}, {'start': 'cellulose', 'end': 'cellulose', 'type': 'part-of', 'properties': {}}, {'start': 'acrylate', 'end': 'acrylate', 'type': 'part-of', 'properties': {}}]"
+Extraction,15,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","substantially free or  essentially free of all other acrylate film forming agents (such as all other acrylate film forming  agents being present in a total amount of less than 0.1% by weight of the composition)  [0062] Non-limiting examples of co-film forming agents include phthalic anhydride/glycerin/glycidyl  decanoate copolymer, adipic acid/diethylene glycol/glycerin crosspolymer, adipic acid/neopentyl  glycol/trimellitic anhydride copolymer, tosylamide/epoxy resin, and hydrogenated  acetophenone/oxymethylene copolymer.  [0063] In some embodiments, the co-film forming agents may include an epoxy resin or a polyester  resin.  [0064] The co-film forming agent(s) may be present in a total amount of up to 8%, 9%, or 10% by  weight of the composition. In some embodiments, the composition may include a plurality of co-film  forming agents, including (i) an epoxy resin (such as tosylamide/epoxy resin) in an amount of  5%-10% by weight of the composition, and (ii) one or more additional co-film forming agents, the  additional co-film forming agents present in a total amount of 0.1%-0.5% by weight of the  composition.  Colorants.  [0065] The composition may include one or more colorants. Any colorant typically found in nail  compositions can be used. Non-limiting examples of colorants include lipophilic dyes, pigments  and pearlescent agents, and their mixtures.  [0066] Non-limiting examples of fat-soluble dyes are, for example, Sudan red, DC Red 17, DC  Green 6, beta-carotene, soybean oil, Sudan brown, DC Yellow 11, DC Violet 2, DC Orange 5 and  quinoline yellow.  [0067] Pigments may be, e.g., white or colored, inorganic and/or organic and coated or uncoated.  Mention may be made, for example, of inorganic pigments such as titanium dioxide, optionally  surface treated, zirconium or cerium oxides and iron or chromium oxides, manganese violet,  ultramarine blue, chromium hydrate and ferric blue. Mention may also be made, among organic  pigments, of carbon black, pigments","[{'name': 'sudan_red', 'label': 'Fat-Soluble Dye', 'properties': {'color': 'red'}}, {'name': 'dc_red_17', 'label': 'Fat-Soluble Dye', 'properties': {'color': 'red'}}, {'name': 'beta_carotene', 'label': 'Fat-Soluble Dye', 'properties': {'color': 'yellow'}}, {'name': 'soybean_oil', 'label': 'Fat-Soluble Dye', 'properties': {}}, {'name': 'sudan_brown', 'label': 'Fat-Soluble Dye', 'properties': {'color': 'brown'}}, {'name': 'dc_yellow_11', 'label': 'Fat-Soluble Dye', 'properties': {'color': 'yellow'}}, {'name': 'dc_violet_2', 'label': 'Fat-Soluble Dye', 'properties': {'color': 'violet'}}, {'name': 'dc_orange_5', 'label': 'Fat-Soluble Dye', 'properties': {'color': 'orange'}}, {'name': 'quinoline_yellow', 'label': 'Fat-Soluble Dye', 'properties': {'color': 'yellow'}}, {'name': 'titanium_dioxide', 'label': 'Inorganic Pigment', 'properties': {'color': 'white'}}, {'name': 'zirconium_oxide', 'label': 'Inorganic Pigment', 'properties': {'color': 'gray'}}, {'name': 'cerium_oxide', 'label': 'Inorganic Pigment', 'properties': {'color': 'pink'}}, {'name': 'iron_oxide', 'label': 'Inorganic Pigment', 'properties': {'color': 'yellow'}}, {'name': 'chromium_hydrate', 'label': 'Inorganic Pigment', 'properties': {'color': 'blue'}}, {'name': 'manganese_violet', 'label': 'Inorganic Pigment', 'properties': {'color': 'purple'}}, {'name': 'ultramarine_blue', 'label': 'Inorganic Pigment', 'properties': {'color': 'blue'}}, {'name': 'ferric_blue', 'label': 'Inorganic Pigment', 'properties': {'color': 'blue'}}, {'name': 'carbon_black', 'label': 'Organic Pigment', 'properties': {'color': 'black'}}, {'name': 'pigment_1', 'label': 'Organic Pigment', 'properties': {}}, {'name': 'tosylamide', 'label': 'Epoxy Resin', 'properties': {}}, {'name': 'epoxy_resin', 'label': 'Epoxy Resin', 'properties': {}}, {'name': 'glycerin', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'glycidyl_decanoate', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'adipic_acid', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'diethylene_glycol', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'neopentyl_glycol', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'trimellitic_anhydride', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'phthalic_anhydride', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'glycerin_copolymer', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'adipic_acid_crosspolymer', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'neopentyl_glycol_copolymer', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'hydrogenated_acetophenone', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'oxymethylene_copolymer', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'polyester_resin', 'label': 'Co-film Forming Agent', 'properties': {}}, {'name': 'h hydrate_polyester_resin', 'label': 'Co-film Forming Agent', 'properties': {}}]","[{'start': 'tosylamide', 'end': 'epoxy_resin', 'type': 'is_part_of', 'properties': {}}, {'start': 'phthalic_anhydride', 'end': 'glycidyl_decanoate_copolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'hydrogenated_acetophenone', 'end': 'oxymethylene_copolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'adipic_acid', 'end': 'diethylene_glycol_crosspolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'neopentyl_glycol', 'end': 'trimellitic_anhydride_copolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'epoxy_resin', 'end': 'tosylamide', 'type': 'coexists_with', 'properties': {}}, {'start': 'glycidyl_decanoate_copolymer', 'end': 'phthalic_anhydride', 'type': 'coexists_with', 'properties': {}}, {'start': 'oxymethylene_copolymer', 'end': 'hydrogenated_acetophenone', 'type': 'coexists_with', 'properties': {}}, {'start': 'diethylene_glycol_crosspolymer', 'end': 'adipic_acid', 'type': 'coexists_with', 'properties': {}}, {'start': 'trimellitic_anhydride_copolymer', 'end': 'neopentyl_glycol', 'type': 'coexists_with', 'properties': {}}, {'start': 'tosylamide', 'end': 'epoxy_resin', 'type': 'is_part_of', 'properties': {}}, {'start': 'hydrogenated_acetophenone', 'end': 'oxymethylene_copolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'adipic_acid', 'end': 'diethylene_glycol_crosspolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'neopentyl_glycol', 'end': 'trimellitic_anhydride_copolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'epoxy_resin', 'end': 'tosylamide', 'type': 'coexists_with', 'properties': {}}, {'start': 'glycidyl_decanoate_copolymer', 'end': 'phthalic_anhydride', 'type': 'coexists_with', 'properties': {}}, {'start': 'oxymethylene_copolymer', 'end': 'hydrogenated_acetophenone', 'type': 'coexists_with', 'properties': {}}, {'start': 'diethylene_glycol_crosspolymer', 'end': 'adipic_acid', 'type': 'coexists_with', 'properties': {}}, {'start': 'trimellitic_anhydride_copolymer', 'end': 'neopentyl_glycol', 'type': 'coexists_with', 'properties': {}}, {'start': 'tosylamide', 'end': 'epoxy_resin', 'type': 'is_part_of', 'properties': {}}, {'start': 'hydrogenated_acetophenone', 'end': 'oxymethylene_copolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'adipic_acid', 'end': 'diethylene_glycol_crosspolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'neopentyl_glycol', 'end': 'trimellitic_anhydride_copolymer', 'type': 'is_part_of', 'properties': {}}, {'start': 'glycerin_copolymer', 'end': 'phthalic_anhydride', 'type': 'coexists_with', 'properties': {}}, {'start': 'adipic_acid_crosspolymer', 'end': 'diethylene_glycol', 'type': 'coexists_with', 'properties': {}}, {'start': 'neopentyl_glycol_copolymer', 'end': 'trimellitic_anhydride', 'type': 'coexists_with', 'properties': {}}, {'start': 'hydrogenated_acetophenone', 'end': 'oxymethylene_copolymer', 'type': 'is_part_of', 'properties': {}}]"
+Extraction,16,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","of D & C type and lakes based on cochineal carmine or on  barium, strontium, calcium or aluminum, such as D&C Red No. 10, 11, 12, and 13, D&C Red No. 7,  D&C Red No. 5 and 6, and D&D Red No. 34, as well as lakes such as D&C Yellow Lake No. 5 and  D&C Red Lake No. 2.  [0068] In some embodiments, pearlescent pigments can be chosen from, for example, white  pearlescent pigments, such as mica covered with titanium oxide or with bismuth oxychloride,  colored pearlescent pigments, such as titanium oxide-coated mica with iron oxides, titanium oxide-  coated mica with in particular ferric blue or chromium oxide, or titanium oxide-coated mica with an
+organic pigment of the abovementioned type, and pearlescent pigments based on bismuth  oxychloride.  [0069] The colorant may be present in the nail composition in a total amount of from 0.01% to 10%  by weight, preferably from 0.1% to 5% by weight, and more preferably from 0.5% to 2% by weight  of the composition. In some embodiments, the colorant may be present in a total amount of less  than 1% by weight of the composition. In some embodiments, the colorant may be present in a  total amount of less than 20% by weight of the composition. In some embodiments, the colorant  may be present in a total amount of less than 15% by weight of the composition. In some  embodiments, the colorant may be present in a total amount of less than 10% by weight of the  composition. In some embodiments, the colorant may be present in a total amount of less than 5%  by weight of the composition. In some embodiments, the colorant may be present in a total amount  of at least 0.01% by weight of the composition. In some embodiments, the colorant may be present  in a total amount of at least 1% by weight of the composition. In some embodiments, the colorant  may be present in a total amount of at least 5% by weight of the composition.  Additional Components.  [0070] The cosmetic nail composition may include one or more additional components. In one  e","[{'name': 'D&C Red No. 10', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'D&C Red No. 11', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'D&C Red No. 12', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'D&C Red No. 13', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'D&C Red No. 7', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'D&C Red No. 5', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'D&C Red No. 6', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'D&D Red No. 34', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'D&C Yellow Lake No. 5', 'label': 'Colorant', 'properties': {'color': 'yellow'}}, {'name': 'D&C Red Lake No. 2', 'label': 'Colorant', 'properties': {'color': 'red'}}, {'name': 'mica', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'titanium oxide', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'bismuth oxychloride', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'iron oxides', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'chromium oxide', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'ferric blue', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'pearl', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'Organic Pigment', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'White Pearlescent Pigments', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'Titanium Oxide-Coated Mica', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'Colored Pearlescent Pigments', 'label': 'Pearlescent Pigment', 'properties': {}}, {'name': 'Aluminum', 'label': 'Colorant', 'properties': {}}, {'name': 'Barium', 'label': 'Colorant', 'properties': {}}, {'name': 'Strontium', 'label': 'Colorant', 'properties': {}}, {'name': 'Calcium', 'label': 'Colorant', 'properties': {}}, {'name': 'Webpage', 'label': 'Additional Component', 'properties': {}}]","[{'start': 'D&C Red No. 10', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&C Red No. 11', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&C Red No. 12', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&C Red No. 13', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&C Red No. 7', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&C Red No. 5', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&C Red No. 6', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&D Red No. 34', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&C Yellow Lake No. 5', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'D&C Red Lake No. 2', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'mica', 'end': 'titanium oxide', 'type': 'pigmented_by', 'properties': {}}, {'start': 'titanium oxide-coated mica', 'end': 'iron oxides', 'type': 'pigmented_by', 'properties': {}}, {'start': 'titanium oxide-coated mica', 'end': 'chromium oxide', 'type': 'pigmented_by', 'properties': {}}, {'start': 'titanium oxide-coated mica', 'end': 'ferric blue', 'type': 'pigmented_by', 'properties': {}}, {'start': 'Organic Pigment', 'end': 'pearl', 'type': 'pigmented_by', 'properties': {}}, {'start': 'Titanium Oxide-Coated Mica', 'end': 'White Pearlescent Pigments', 'type': 'pigmented_by', 'properties': {}}, {'start': 'Colored Pearlescent Pigments', 'end': 'titanium oxide-coated mica', 'type': 'pigmented_by', 'properties': {}}, {'start': 'Aluminum', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'Barium', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'Strontium', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'Calcium', 'end': 'pearl', 'type': 'colorant_of', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Red No. 10', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Red No. 11', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Red No. 12', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Red No. 13', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Red No. 7', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Red No. 5', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Red No. 6', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&D Red No. 34', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Yellow Lake No. 5', 'type': 'owns', 'properties': {}}, {'start': 'Webpage', 'end': 'D&C Red Lake No. 2', 'type': 'owns', 'properties': {}}]"
+Extraction,17,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","mbodiment, the cosmetic nail composition may be substantially free of any additional components  (i.e., the composition may include the UV gel portion, the solvents, the film formers, and the  colorants, and may be substantially free of any other component).  [0071] In some embodiments, the additional component(s) may be present in a total amount of no  more than 5% by weight of the cosmetic nail composition. The additional components may include  a filler, a pH adjusting agent, a UV absorbing agent, or a combination thereof.  Fillers.  [0072] Non-limiting examples of filler agents (or fillers) include ethyl methacrylate/glycol  dimethacrylate crosspolymer, vinyl dimethicone/methicone silsesquioxane crosspolymer, methyl  methacrylate crosspolymer, nylon-12, polyamides, polyethylene, talc, titanium dioxide, silica,  aluminum starch octenylsuccinate, clays (such as hectorite clays including stearalkonium  hectorite), silicas, polymethylsilsesquioxane, and mixtures thereof.  [0073] In some embodiments, a plurality of filler agents are present. In some embodiments, only a  single filler agent is utilized. In some embodiments, filler agent(s) are present in a total amount of  no more than 2% by weight of the composition. In some embodiments, filler agent(s) are present in  a total amount of no more than 1.5% by weight of the composition. In some embodiments, filler  agent(s) are present in a total amount of no more than 1% by weight of the composition.  UV Absorbing Agents.  [0074] The UV absorbing agent may be any appropriate UV absorbing agent or filter, such as one  or more hydrophobic or water-insoluble organic UV filter(s). Non-limiting examples of such filters  include the following: [0075] Anthranilic compounds: Menthyl anthranilate. [0076]  Dibenzoylmethane compounds: Butyl methoxydibenzoylmethane, and isopropyl dibenzoylmethane.  [0077] Cinnamic compounds: Ethylhexyl methoxycinnamate, isopropyl methoxycinnamate;  isopropoxy methoxycinnamate; isoamyl methoxycinna","[{'name': 'mbodiment', 'label': 'Composition', 'properties': {'type': 'Cosmetic Nail Composition'}}, {'name': 'UV Gel', 'label': 'Component', 'properties': {}}, {'name': 'Solvents', 'label': 'Component', 'properties': {}}, {'name': 'Film Formers', 'label': 'Component', 'properties': {}}, {'name': 'Colorants', 'label': 'Component', 'properties': {}}, {'name': 'Filler Agents', 'label': 'Component', 'properties': {}}, {'name': 'Ethyl Methacrylate/Glycol Dimethacrylate Crosspolymer', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Vinyl Dimethicone/Methicone Silsesquioxane Crosspolymer', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Methyl Methacrylate Crosspolymer', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Nylon-12', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Polyamides', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Polyethylene', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Talc', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Titanium Dioxide', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Silica', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Aluminum Starch Octenylsuccinate', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Hectorite Clays', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Stearalkonium Hectorite', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Polymethylsilsesquioxane', 'label': 'Filler Agent', 'properties': {}}, {'name': 'Anthranilic Compounds', 'label': 'UV Absorbing Agent', 'properties': {}}, {'name': 'Menthyl Anthranilate', 'label': 'UV Absorbing Agent', 'properties': {}}, {'name': 'Dibenzoylmethane Compounds', 'label': 'UV Absorbing Agent', 'properties': {}}, {'name': 'Butyl Methoxydibenzoylmethane', 'label': 'UV Absorbing Agent', 'properties': {}}, {'name': 'Isopropyl Dibenzoylmethane', 'label': 'UV Absorbing Agent', 'properties': {}}, {'name': 'Cinnamic Compounds', 'label': 'UV Absorbing Agent', 'properties': {}}, {'name': 'Ethylhexyl Methoxycinnamate', 'label': 'UV Absorbing Agent', 'properties': {}}, {'name': 'Isopropyl Methoxycinnamate', 'label': 'UV Absorbing Agent', 'properties': {}}, {'name': 'Isoamyl Methoxy Cinnamate', 'label': 'UV Absorbing Agent', 'properties': {}}]","[{'start': 'mbodiment', 'end': 'Composition', 'type': 'is a type of', 'properties': {}}, {'start': 'mbodiment', 'end': 'UV Gel', 'type': 'contains', 'properties': {}}, {'start': 'mbodiment', 'end': 'Solvents', 'type': 'contains', 'properties': {}}, {'start': 'mbodiment', 'end': 'Film Formers', 'type': 'contains', 'properties': {}}, {'start': 'mbodiment', 'end': 'Colorants', 'type': 'contains', 'properties': {}}, {'start': 'mbodiment', 'end': 'Filler Agents', 'type': 'may contain', 'properties': {'amount': 5}}, {'start': 'mbodiment', 'end': 'Ethyl Methacrylate/Glycol Dimethacrylate Crosspolymer', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Vinyl Dimethicone/Methicone Silsesquioxane Crosspolymer', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Methyl Methacrylate Crosspolymer', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Nylon-12', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Polyamides', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Polyethylene', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Talc', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Titanium Dioxide', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Silica', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Aluminum Starch Octenylsuccinate', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Hectorite Clays', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Stearalkonium Hectorite', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Polymethylsilsesquioxane', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Anthranilic Compounds', 'type': 'may include', 'properties': {'amount': 5}}, {'start': 'mbodiment', 'end': 'Menthyl Anthranilate', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Dibenzoylmethane Compounds', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Butyl Methoxydibenzoylmethane', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Isopropyl Dibenzoylmethane', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Cinnamic Compounds', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Ethylhexyl Methoxycinnamate', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Isopropyl Methoxycinnamate', 'type': 'includes', 'properties': {}}, {'start': 'mbodiment', 'end': 'Isoamyl Methoxy Cinnamate', 'type': 'includes', 'properties': {}}]"
+Extraction,18,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","mate, cinoxate (2-ethoxyethyl-4-methoxy  cinnamate); DEA methoxycinnamate; diisopropyl methylcinnamate; and glyceryl ethylhexanoate  dimethoxycinnamate. [0078] Salicylic compounds: Homosalate (homomenthyl salicylate),  ethylhexyl salicylate, glycol salicylate; butyloctyl salicylate; phenyl salicylate; dipropyleneglycol  salicylate, and TEA salicylate. [0079] Camphor compounds, in particular, benzylidenecamphor  derivatives: 3-benzylidene camphor, 4-methylbenzylidene camphor, benzylidene camphor sulfonic  acid, camphor benzalkonium methosulfate, and polyacrylamidomethyl benzylidene camphor.  [0080] Benzophenone compounds: Benzophenone-1 (2,4-dihydroxybenzophenone),  benzophenone-2 (Tetrahydroxybenzophenone), Benzophenone-3 (2-hydroxy-4-  methoxybenzophenone) or oxybenzone, benzophenone-4 (hydroxymethoxy benzophenone  sulfonic acid), benzophenone-5 (Sodium hydroxymethoxy benzophenone Sulfonate),  benzophenone-6 (dihydroxy dimethoxy benzophenone), benzophenone-8, benzophenone-9  (Disodium dihydroxy dimethoxy benzophenonedisulfonate), benzophenone-12, and n-hexyl 2-(4-
+diethylamino-2-hydroxybenzoyl)benzoate. [0081] β,β-Diphenylacrylate compounds: Octocrylene,  and Etocrylene. [0082] Triazine compounds: Diethylhexyl butamido triazone, 2,4,6-tris(dineopentyl  4′-aminobenzalmalonate)-s-triazine, bis-ethylhexyloxyphenol methoxyphenyl triazine, and  ethylhexyl triazone. [0083] Benzotriazole compounds, in particular, phenylbenzothiazole  derivatives: −(2H-benzotriazole-2-yl)-6-dodecyl-","[{'name': 'cinoxate', 'label': 'Chemical Compound', 'properties': {'name': 'Cinoxate', 'type': 'Pesticide'}}, {'name': 'methoxycinnamate', 'label': 'Chemical Compound', 'properties': {'name': 'Methoxycinnamate', 'type': 'Pesticide'}}, {'name': 'diisopropyl methylcinnamate', 'label': 'Chemical Compound', 'properties': {'name': 'Diisopropyl Methylcinnamate', 'type': 'Pesticide'}}, {'name': 'Homosalate', 'label': 'Salicylic Compound', 'properties': {}}, {'name': 'ethylhexyl salicylate', 'label': 'Salicylic Compound', 'properties': {}}, {'name': 'glycol salicylate', 'label': 'Salicylic Compound', 'properties': {}}, {'name': 'butyloctyl salicylate', 'label': 'Salicylic Compound', 'properties': {}}, {'name': 'phenyl salicylate', 'label': 'Salicylic Compound', 'properties': {}}, {'name': 'dipropyleneglycol salicylate', 'label': 'Salicylic Compound', 'properties': {}}, {'name': 'TEA salicylate', 'label': 'Salicylic Compound', 'properties': {}}, {'name': '3-benzylidene camphor', 'label': 'Camphor Compound', 'properties': {}}, {'name': '4-methylbenzylidene camphor', 'label': 'Camphor Compound', 'properties': {}}, {'name': 'benzylidene camphor sulfonic acid', 'label': 'Camphor Compound', 'properties': {}}, {'name': 'camphor benzalkonium methosulfate', 'label': 'Camphor Compound', 'properties': {}}, {'name': 'polyacrylamidomethyl benzylidene camphor', 'label': 'Camphor Compound', 'properties': {}}, {'name': 'Benzophenone-1', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Benzophenone-2', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Benzophenone-3', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Benzophenone-4', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Benzophenone-5', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Benzophenone-6', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Benzophenone-8', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Benzophenone-9', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Benzophenone-12', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'n-hexyl 2-(4-diethylamino-2-hydroxybenzoyl)benzoate', 'label': 'Benzophenone Compound', 'properties': {}}, {'name': 'Octocrylene', 'label': 'β', 'properties': {}}, {'name': 'Etocrylene', 'label': 'β', 'properties': {}}, {'name': 'Diethylhexyl butamido triazone', 'label': 'Triazine Compound', 'properties': {}}, {'name': '2', 'label': '4', 'properties': {}}, {'name': 'bis-ethylhexyloxyphenol methoxyphenyl triazine', 'label': 'Triazine Compound', 'properties': {}}, {'name': 'ethylhexyl triazone', 'label': 'Triazine Compound', 'properties': {}}, {'name': 'phenylbenzothiazole derivatives', 'label': 'Benzotriazole Compound', 'properties': {}}, {'name': '−(2H-benzotriazole-2-yl)-6-dodecyl-', 'label': 'Benzotriazole Compound', 'properties': {}}]",[]
+Extraction,19,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","4-methylphenol, branched and linear; and those  described in U.S. Pat. No. 5,240,975. [0084] Benzalmalonate compounds: Dineopentyl 4′-  methoxybenzalmalonate, and polyorganosiloxane comprising benzalmalonate functional groups,  such as polysilicone-15. [0085] Benzimidazole compounds, in particular, phenylbenzimidazole  derivatives. [0086] Imidazoline compounds: Ethylhexyl dimethoxybenzylidene dioxoimidazoline  propionate. [0087] Bis-benzoxazolyl compounds: The derivatives as described in EP-669,323 and  U.S. Pat. No. 2,463,264. [0088] Para-aminobenzoic acid compounds: PABA (p-aminobenzoic acid),  ethyl PABA, Ethyl dihydroxypropyl PABA, pentyl dimethyl PABA, ethylhexyl dimethyl PABA, glyceryl  PABA, and PEG-25 PABA. [0089] Methylene bis-(hydroxyphenylbenzotriazole) compounds, such  as 2,2′-methylenebis[6-(2H-benzotriazol-2-yl)-4-methyl-phenol] in the solid form, 2,2′-  methylenebis[6-(2H-benzotriazol-2-yl)-4-(1,1,3,3-tetramethylbutyl)phenol] in the micronized form in  an aqueous dispersion, and the derivatives as described in U.S. Pat. Nos. 5,237,071, 5,166,355,  GB-2,303,549, DE-197,26,184 and EP-893,119, and Drometrizole trisiloxane as represented  below.  ##STR00001##  [0090] Benzoxazole compounds: 2,4-bis[5-1(dimethylpropyl)benzoxazol-2-yl-(4-phenyl)imino]-6-(2-  ethylhexyl)imino-1,3,5-triazine.  [0091] In some embodiments, a plurality of UV absorbing agents are present. In some  embodiments, only a single UV absorbing agent is utilized. In some embodiments, UV absorbing","[{'name': '4-methylphenol', 'label': 'Compound', 'properties': {'molecularStructure': 'methyl group attached to phenol', 'physicalState': 'liquid'}}, {'name': 'U.S. Pat. No. 5', 'label': '240', 'properties': {}}, {'name': 'Benzalmalonate compounds', 'label': 'Class', 'properties': {}}, {'name': 'Dineopentyl 4′-methoxybenzalmalonate', 'label': 'Compound', 'properties': {'chemicalFormula': 'C16H24O3'}}, {'name': 'polyorganosiloxane comprising benzalmalonate functional groups', 'label': 'Material', 'properties': {}}, {'name': 'polysilicone-15', 'label': 'Material', 'properties': {}}, {'name': 'Benzimidazole compounds', 'label': 'Class', 'properties': {}}, {'name': 'phenylbenzimidazole derivatives', 'label': 'Subclass', 'properties': {}}, {'name': 'Ethylhexyl dimethoxybenzylidene dioxoimidazoline propionate', 'label': 'Compound', 'properties': {'chemicalFormula': 'C24H38N2O4'}}, {'name': 'Bis-benzoxazolyl compounds', 'label': 'Class', 'properties': {}}, {'name': 'EP-669', 'label': '323', 'properties': {}}, {'name': 'U.S. Pat. No. 2', 'label': '463', 'properties': {}}, {'name': 'PABA (p-aminobenzoic acid)', 'label': 'Compound', 'properties': {'chemicalFormula': 'C8H9N3O3'}}, {'name': 'ethyl PABA', 'label': 'Compound', 'properties': {'chemicalFormula': 'C9H11NO4'}}, {'name': 'Ethyl dihydroxypropyl PABA', 'label': 'Compound', 'properties': {'chemicalFormula': 'C10H13NO5'}}, {'name': 'pentyl dimethyl PABA', 'label': 'Compound', 'properties': {'chemicalFormula': 'C12H17N3O4'}}, {'name': 'ethylhexyl dimethyl PABA', 'label': 'Compound', 'properties': {'chemicalFormula': 'C14H19N3O5'}}, {'name': 'glyceryl PABA', 'label': 'Compound', 'properties': {'chemicalFormula': 'C11H15NO4'}}, {'name': 'PEG-25 PABA', 'label': 'Compound', 'properties': {}}]","[{'start': 'U.S. Pat. No. 5', 'end': '975', 'type': '240', 'properties': {}}, {'start': 'EP-669', 'end': 'CLAIMS', 'type': '323', 'properties': {}}, {'start': 'U.S. Pat. No. 2', 'end': '264', 'type': '463', 'properties': {}}]"
+Extraction,20,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","agent(s) are present in a total amount of no more than 1% by weight of the composition. In some  embodiments, UV absorbing agent(s) are present in a total amount of no more than 0.5% by  weight of the composition. In some embodiments, UV absorbing agent(s) are present in a total  amount of no more than 0.1% by weight of the composition.  pH Adjusters.  [0092] The composition may also include acid and/or alkali pH adjusters, which are well known in  the art. Such pH adjusters include, but are not limited to, sodium metasilicate, silicate compounds,  citric acid, ascorbic acid, and carbonate compounds.  [0093] In some embodiments, pH adjuster(s) are present in a total amount of no more than 1% by  weight of the composition. In some embodiments, pH adjuster(s) are present in a total amount of  no more than 0.5% by weight of the composition. In some embodiments, pH adjuster(s) are  present in a total amount of no more than 0.1% by weight of the composition.  [0094] In some embodiments, the composition may include the UV gel portion, the solvent(s), the  film former(s), the colorant(s), filler(s), UV absorbing agent(s), and pH adjuster(s), and may be  substantially free, essentially free, or free of any other component.  [0095] In various aspects, a method for providing a nail composition with improved wear may be  utilized. The method may include applying a composition as disclosed herein to a nail, and curing  the composition by exposing the composition to an ultraviolet (UV) light. After wearing (e.g., for an  extended period of time), the composition can then be removed from the nail, with less damage to  the nail as compared to conventional long-wear UV gel nail formulations.  EXAMPLES  Example 1  [0096] One embodiment of a nail formulation can be seen in Table 1, below.  TABLE-US-00001 Material Wt % UV Gel Portion 19-30%   UV Curable Materials 15-23%  Difunctional acrylate oligomer 8-15%   Polymerizable (meth)acrylate 2-8% Photoinitiator 2-8%  Solvent-Based Portion","[{'name': '19-30%', 'label': 'Component', 'properties': {}}, {'name': '15-23%', 'label': 'Component', 'properties': {}}, {'name': '8-15%', 'label': 'Component', 'properties': {}}, {'name': '2-8%', 'label': 'Photoinitiator', 'properties': {}}, {'name': 'UV Gel Portion', 'label': 'Component', 'properties': {}}, {'name': 'UV Curable Materials', 'label': 'Component', 'properties': {}}, {'name': 'Difunctional acrylate oligomer', 'label': 'Component', 'properties': {}}, {'name': 'Polymerizable (meth)acrylate', 'label': 'Component', 'properties': {}}, {'name': 'Solvent-Based Portion', 'label': 'Component', 'properties': {}}]","[{'start': '19-30%', 'end': 'UV Gel Portion', 'type': 'part_of', 'properties': {}}, {'start': '15-23%', 'end': 'UV Curable Materials', 'type': 'part_of', 'properties': {}}, {'start': '8-15%', 'end': 'Component', 'type': 'part_of', 'properties': {}}, {'start': '2-8%', 'end': 'Photoinitiator', 'type': 'part_of', 'properties': {}}, {'start': '19-30%', 'end': 'Material Wt %', 'type': 'constitutes', 'properties': {'type': 'percentage'}}, {'start': '15-23%', 'end': 'Material Wt %', 'type': 'constitutes', 'properties': {'type': 'percentage'}}, {'start': '8-15%', 'end': 'Material Wt %', 'type': 'constitutes', 'properties': {'type': 'percentage'}}, {'start': '2-8%', 'end': 'Photoinitiator', 'type': 'constitutes', 'properties': {}}, {'start': 'UV Gel Portion', 'end': 'Component', 'type': 'part_of', 'properties': {}}, {'start': 'UV Curable Materials', 'end': 'Component', 'type': 'part_of', 'properties': {}}, {'start': 'Difunctional acrylate oligomer', 'end': 'Component', 'type': 'part_of', 'properties': {}}, {'start': 'Polymerizable (meth)acrylate', 'end': 'Component', 'type': 'part_of', 'properties': {}}, {'start': 'Solvent-Based Portion', 'end': 'Component', 'type': 'part_of', 'properties': {}}]"
+Extraction,21,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","70-81%   Solvents 50-70%   Acetates (Ethyl, Propyl, Butyl) 45-60%   C2-  C5 Monoalcohols (Ethanol, Isopropanol) 3-5% C8-C16 Volatile Hydrocarbon 1-2% Benzoic acid
+derivative, citric acid derivative, and/or 3-5% isobutyrate derivative Film Formers 5-20%  Celluloses (Nitrocellulose) 3-10%   Acrylates 1-2% Co-Film Former (Epoxy) 3-10%   Co-Film  Former (Other) <1% Colorant <2% Additional Components (pH Adjusters, Fillers, UV Absorbing  <2% Agents)  Example 2  [0097] Three formulations were made, similar to the formula in Example 1, where the percentage of  UV curable materials was allowed to vary, to be QS'd with acetates, but the formulations were  otherwise identical to each other. The three formulations had 8%, 11%, and 19% UV curable  materials.  [0098] To evaluate the samples, each test formula was painted onto a nail spoon, by applying 2  coats of each formula onto a target nail spoon. Each nail spoon was then cured under an LED UV  light for 30 sec. After curing with the UV light, each nail spoon was aged at room temperature for  24 hours before a removal test.  [0099] The removal test was performed as follows. A cotton pad was saturated with 1 ml of  acetone. The nail spoon was then rubbed in a single direction using the cotton pad, repeatedly,  until the color coat is removed or the acetone in cotton pad is gone. The number of strokes (or  passes) required to remove the color is counted. A higher number of strokes in this removability  test indicates the formulation is more difficult to remove, and the crosslinking density is higher. The  results are shown in Table 2, below.  TABLE-US-00002 Nail Spoon # Wt % of UV Curable Materials Number of strokes req'd 1 19% >70  2 15% 32 3 11% 27 4   8% 20  [0100] The improvement in wear performance when the amount of UV curable materials was at  least 19% by weight of the composition was unexpected and surprising. As there is almost no  increase in removal resistance from 11% to 15%, the large increase in removal resista","[{'name': 'Solvent', 'label': 'Solvent', 'properties': {}}, {'name': 'Acetate', 'label': 'Solvent', 'properties': {}}, {'name': 'Ethyl Acetate', 'label': 'Solvent', 'properties': {'name': 'Ethyl Acetate'}}, {'name': 'Propyl Acetate', 'label': 'Solvent', 'properties': {'name': 'Propyl Acetate'}}, {'name': 'Butyl Acetate', 'label': 'Solvent', 'properties': {}}, {'name': 'C2 Monoalcohol', 'label': 'Solvent', 'properties': {}}, {'name': 'Ethanol', 'label': 'Solvent', 'properties': {'name': 'Ethanol'}}, {'name': 'Isopropanol', 'label': 'Solvent', 'properties': {}}, {'name': 'C8-C16 Hydrocarbon', 'label': 'Solvent', 'properties': {}}, {'name': 'Toluene', 'label': 'Solvent', 'properties': {'name': 'Toluene'}}, {'name': 'Xylene', 'label': 'Solvent', 'properties': {}}, {'name': 'Benzoic Acid Derivative', 'label': 'Solvent', 'properties': {}}, {'name': 'Citric Acid Derivative', 'label': 'Solvent', 'properties': {}}, {'name': 'Isobutyrate Derivative', 'label': 'Solvent', 'properties': {}}, {'name': 'Film Former', 'label': 'Film Former', 'properties': {}}, {'name': 'Cellulose Nitrocellulose', 'label': 'Film Former', 'properties': {'name': 'Nitrocellulose'}}, {'name': 'Acrylate', 'label': 'Film Former', 'properties': {}}, {'name': 'Co-Film Former (Epoxy)', 'label': 'Film Former', 'properties': {'name': 'Epoxy'}}, {'name': 'Co-Film Former (Other)', 'label': 'Film Former', 'properties': {}}, {'name': 'Colorant', 'label': 'Colorant', 'properties': {}}, {'name': 'UV Curable Agent', 'label': 'Colorant', 'properties': {}}, {'name': 'Pigment', 'label': 'Colorant', 'properties': {}}, {'name': 'Dye', 'label': 'Colorant', 'properties': {}}, {'name': 'Additional Component (pH Adjuster)', 'label': 'Colorant', 'properties': {}}, {'name': 'Filler', 'label': 'Colorant', 'properties': {}}, {'name': 'UV Absorber', 'label': 'Colorant', 'properties': {}}, {'name': 'Agent', 'label': 'Colorant', 'properties': {}}]","[{'start': 'Solvent', 'end': 'Film Former', 'type': 'is_component_of', 'properties': {}}, {'start': 'Acetate', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {}}, {'start': 'Ethyl Acetate', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {'type': 'Specific'}}, {'start': 'Propyl Acetate', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {'type': 'Specific'}}, {'start': 'Butyl Acetate', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {'type': 'Specific'}}, {'start': 'C2 Monoalcohol', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {}}, {'start': 'Ethanol', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {'type': 'Specific'}}, {'start': 'Isopropanol', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {}}, {'start': 'C8-C16 Hydrocarbon', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {}}, {'start': 'Toluene', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {'type': 'Specific'}}, {'start': 'Xylene', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {}}, {'start': 'Benzoic Acid Derivative', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {}}, {'start': 'Citric Acid Derivative', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {}}, {'start': 'Isobutyrate Derivative', 'end': 'Solvent', 'type': 'is_component_of', 'properties': {'type': 'Specific'}}, {'start': 'Film Former', 'end': 'Co-Film Former (Epoxy)', 'type': 'has_type', 'properties': {}}, {'start': 'Acrylate', 'end': 'Co-Film Former (Other)', 'type': 'has_type', 'properties': {}}, {'start': 'Colorant', 'end': 'Additional Component (pH Adjuster)', 'type': 'is_component_of', 'properties': {}}, {'start': 'UV Curable Agent', 'end': 'Pigment', 'type': 'is_component_of', 'properties': {}}, {'start': 'Dye', 'end': 'Pigment', 'type': 'is_component_of', 'properties': {'type': 'Specific'}}, {'start': 'Additional Component (pH Adjuster)', 'end': 'Filler', 'type': 'has_type', 'properties': {}}, {'start': 'Filler', 'end': 'Agent', 'type': 'has_type', 'properties': {}}, {'start': 'UV Absorber', 'end': 'Agent', 'type': 'has_type', 'properties': {}}]"
+Extraction,22,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","nce from  15% to 19% is a very surprising benefit.  [0101] Further, additional testing has shown the formulations can provide 2 weeks of wear, with  high shine performance and chip resistance. Additionally, when removing the nail polish, the time  the nails need to be soaked in acetone is greatly reduced as compared to conventional UV gel  formulations—from 10 minutes or more to under 2 minutes.  [0102] Various modifications may be made to the various aspects disclosed herein, such  modifications being contemplated as being within the scope of the invention. For example, while a  specific order of steps or arrangement of functional elements is presented in the various  embodiments described herein, various other orders/arrangements of steps or functional elements  may be utilized within the context of the various embodiments. Further, while modifications to  embodiments may be discussed individually, various embodiments may use multiple modifications  contemporaneously or in sequence, compound modifications and the like.  [0103] Although various embodiments which incorporate the teachings of the present invention  have been shown and described in detail herein, those skilled in the art can readily devise many  other varied embodiments that still incorporate these teachings. Thus, while the foregoing is  directed to various embodiments of the present invention, other and further embodiments of the  invention may be devised without departing from the basic scope thereof. As such, the appropriate  scope of the invention is to be determined according to the claims.  Claims  1 . A cosmetic nail composition comprising: an ultraviolet (UV) gel portion comprising: a plurality of  UV-curable materials, the plurality of UV-curable materials present in a total amount of at least 19%  by weight of the cosmetic nail composition, the plurality of UV-curable materials including a  difunctional acrylate oligomer; and a photoinitiator; and a solvent-based portion comprising a  plurality of solvents.  2 . The cosmetic nail composition according to claim 1, wherein the difunctional acrylate oligomer  comprises a urethane monomer, and the plurality of UV-curable materials consists of the urethane
+monomer and a polymerizable (meth)acrylate.  3 . The cosmetic nail composition according to claim 2, wherein the urethane monomer is a  urethane acrylate monomer, and the polymerizable (meth)acrylate is pyromellitic dimethacrylate.  4 . The cosmetic nail composition according to clai","[{'name': '0101', 'label': 'Formula', 'properties': {'benefit': 'surprising benefit', 'percentage': '15-19%'}}, {'name': '0102', 'label': 'Modification', 'properties': {'type': 'wearing time reduction'}}, {'name': '0103', 'label': 'Disclaimer', 'properties': {}}]","[{'start': '0101', 'end': '0102', 'type': 'contains', 'properties': {'modification type': 'benefit improvement'}}, {'start': '0102', 'end': '0101', 'type': 'applies to', 'properties': {}}, {'start': '0103', 'end': '0101', 'type': 'disclaims', 'properties': {}}]"
+Extraction,23,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","m 3, wherein the urethane acrylate monomer is  present in an amount from 8-15% by weight of the cosmetic nail composition, and the pyromellitic  dimethacrylate is present in an amount from 2-8% by weight of the cosmetic nail composition.  5 . The cosmetic nail composition according to claim 1, wherein the photoinitiator is a type I  photoinitiator.  6 . The cosmetic nail composition according to claim 5, wherein the type I photoinitiator is ethyl  trimethylbenzoyl phenylphosphinate.  7 . The cosmetic nail composition according to claim 1, wherein the UV gel portion is present in a  total amount of 19-50% by weight of the cosmetic nail composition.  8 . The cosmetic nail composition according to claim 7, wherein the photoinitiator is present in a  total amount of 3-6% by weight of the cosmetic nail composition.  9 . The cosmetic nail composition according to claim 1, wherein the solvent-based portion further  comprises at least one film forming agent.  10 . The cosmetic nail composition according to claim 9, wherein the at least one film forming agent  comprises a cellulose film forming agent.  11 . The cosmetic nail composition according to claim 10, wherein the cellulose film forming agent is  nitrocellulose and/or cellulose acetate butyrate.  12 . The cosmetic nail composition according to claim 10, wherein the at least one film forming  agent comprises an acrylate film forming agent.  13 . The cosmetic nail composition according to claim 12, wherein the acrylate film forming agent  includes acrylates copolymer, acrylates/isobornyl acrylate copolymer, and/or  tricyclodecanedimenahnol diacrylate.  14 . The cosmetic nail composition according to claim 12, wherein the at least one film forming  agent comprises one or more co-film forming agents.  15 . The cosmetic nail composition according to claim 14, wherein the one or more co-film forming  agents includes adipic acid/neopentyl glycol/trimellitic anhydride copolymer and/or hydrogenated  acetophenone/oxymethylene c","[{'name': 'urethane_acrylate_monomer', 'label': 'Monomer', 'properties': {'type': 'chemical'}}, {'name': 'pyromellitic_dimethacrylate', 'label': 'Monomer', 'properties': {'type': 'chemical'}}, {'name': 'cosmetic_nail_composition', 'label': 'Composition', 'properties': {}}, {'name': 'photoinitiator', 'label': 'Photoinitiator', 'properties': {'type': 'I'}}, {'name': 'ethyl_trimethylbenzoyl_phenylphosphinate', 'label': 'Photoinitiator', 'properties': {}}, {'name': 'film_forming_agent', 'label': 'FilmFormingAgent', 'properties': {}}, {'name': 'cellulose', 'label': 'FilmFormingAgent', 'properties': {}}, {'name': 'nitrocellulose', 'label': 'FilmFormingAgent', 'properties': {}}, {'name': 'cellulose_acetate_butyrate', 'label': 'FilmFormingAgent', 'properties': {}}, {'name': 'acrylate_copolymer', 'label': 'FilmFormingAgent', 'properties': {}}, {'name': 'acrylates_isobornyl_acrylate_copolymer', 'label': 'FilmFormingAgent', 'properties': {}}, {'name': 'tricyclodecanedimenahnol_diacrylate', 'label': 'FilmFormingAgent', 'properties': {}}, {'name': 'adipic_acid_neopentyl_glycol_trimellitic_anhydride_copolymer', 'label': 'CoFilmFormingAgent', 'properties': {}}, {'name': 'hydrogenated_acetophenone_oxymethylene_copolymers', 'label': 'CoFilmFormingAgent', 'properties': {}}]","[{'start': 'cosmetic_nail_composition', 'end': 'urethane_acrylate_monomer', 'type': 'contains', 'properties': {'percentage': 8, 'percentage_limit': 15}}, {'start': 'cosmetic_nail_composition', 'end': 'pyromellitic_dimethacrylate', 'type': 'contains', 'properties': {'percentage': 2, 'percentage_limit': 8}}, {'start': 'photoinitiator', 'end': 'ethyl_trimethylbenzoyl_phenylphosphinate', 'type': 'is', 'properties': {}}, {'start': 'UV_gel_portion', 'end': 'cosmetic_nail_composition', 'type': 'is_part_of', 'properties': {}}, {'start': 'solvent_based_portion', 'end': 'cosmetic_nail_composition', 'type': 'is_part_of', 'properties': {}}, {'start': 'film_forming_agent', 'end': 'solvent_based_portion', 'type': 'is_in', 'properties': {}}, {'start': 'cellulose', 'end': 'film_forming_agent', 'type': 'is_in', 'properties': {}}, {'start': 'nitrocellulose', 'end': 'film_forming_agent', 'type': 'is_in', 'properties': {}}, {'start': 'cellulose_acetate_butyrate', 'end': 'film_forming_agent', 'type': 'is_in', 'properties': {}}, {'start': 'acrylate_copolymer', 'end': 'film_forming_agent', 'type': 'is_in', 'properties': {}}, {'start': 'acrylates_isobornyl_acrylate_copolymer', 'end': 'film_forming_agent', 'type': 'is_in', 'properties': {}}, {'start': 'tricyclodecanedimenahnol_diacrylate', 'end': 'film_forming_agent', 'type': 'is_in', 'properties': {}}, {'start': 'adipic_acid_neopentyl_glycol_trimellitic_anhydride_copolymer', 'end': 'cofilm_forming_agent', 'type': 'is_in', 'properties': {}}, {'start': 'hydrogenated_acetophenone_oxymethylene_copolymers', 'end': 'cofilm_forming_agent', 'type': 'is_in', 'properties': {}}]"
+Extraction,24,"
+You are a data scientist working for a company that is building a graph database. Your task is to extract information from data and convert it into a graph database.
+Provide a set of Nodes in the form [ENTITY, TYPE, PROPERTIES] and a set of relationships in the form [ENTITY1, RELATIONSHIP, ENTITY2, PROPERTIES]. 
+Pay attention to the type of the properties, if you can't find data for a property set it to null. Don't make anything up and don't add any extra data. If you can't find any data for a node or relationship don't add it.
+Only add nodes and relationships that are part of the schema. If you don't get any relationships in the schema only add nodes.
+
+Schema:
+{
+  ""graphSchemaRepresentation"": {
+    ""graphSchema"": {
+      ""nodeLabels"": [
+        { ""$id"": ""nl:Patent"", ""token"": ""Patent"" },
+        { ""$id"": ""nl:Chemical"", ""token"": ""Chemical"" },
+        { ""$id"": ""nl:Person"", ""token"": ""Person"" },
+        { ""$id"": ""nl:Organization"", ""token"": ""Organization"" }
+      ],
+      ""relationshipTypes"": [
+        { ""$id"": ""rel:invented_by"", ""token"": ""invented_by"", ""source"": ""Patent"", ""target"": ""Person"" },
+        { ""$id"": ""rel:assigned_to"", ""token"": ""assigned_to"", ""source"": ""Patent"", ""target"": ""Organization"" },
+        { ""$id"": ""rel:contains_chemical"", ""token"": ""contains_chemical"", ""source"": ""Patent"", ""target"": ""Chemical"" }
+      ],
+      ""nodeObjectTypes"": [
+        {
+          ""labels"": { ""$ref"": ""#nl:Patent"" },
+          ""properties"": {
+            ""token"": ""id"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""title"": { ""type"": ""string"", ""nullable"": true },
+            ""publication_date"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Patent""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Chemical"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false,
+            ""weight_percentage"": {
+              ""type"": ""float"",
+              ""nullable"": false
+            },
+            ""chemical_type"": { ""type"": ""string"", ""nullable"": true },
+            ""role"": { ""type"": ""string"", ""nullable"": true }
+          },
+          ""$id"": ""n:Chemical""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Person"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Person""
+        },
+        {
+          ""labels"": { ""$ref"": ""#nl:Organization"" },
+          ""properties"": {
+            ""token"": ""name"",
+            ""type"": { ""type"": ""string"" },
+            ""nullable"": false
+          },
+          ""$id"": ""n:Organization""
+        }
+      ]
+    },
+    ""relationshipObjectTypes"": []
+  }
+}
+
+Example:
+Schema: Nodes: [Person {age: integer, name: string}] Relationships: [Person, roommate, Person]
+Alice is 25 years old and Bob is her roommate.
+Nodes: [[""Alice"", ""Person"", {""age"": 25, ""name"": ""Alice}], [""Bob"", ""Person"", {""name"": ""Bob""}]]
+Relationships: [[""Alice"", ""roommate"", ""Bob""]]
+","opolymer.  16 . The cosmetic nail composition according to claim 15, wherein the one or more co-film forming  agents comprises an epoxy resin.  17 . The cosmetic nail composition according to claim 16, wherein the epoxy resin is a tosylamide  epoxy resin.  18 . The cosmetic nail composition according to claim 14, wherein the acrylate film forming agent is  present in a total amount, by weight, that is less than both the total amount of co-film forming agent  and the total amount of cellulose film forming agent.  19 . The cosmetic nail composition according to claim 14, further comprising a colorant.  20 . The cosmetic nail composition according to claim 19, further comprising at least one additional  component, the at least one additional component being present in a total amount of no more than  5% by weight of the cosmetic nail composition.  21 . The cosmetic nail composition according to claim 19, further comprising a filler, a pH adjusting  agent, a UV absorbing agent, or a combination thereof.
+22 . The cosmetic nail composition according to claim 1, wherein the plurality of UV-curable  materials comprises a first UV-curable material and second UV-curable material, the first UV-  curable material present in an amount of 8-15% by weight of the cosmetic nail composition, the  second UV-curable material present in an amount of 2-8% by weight of the cosmetic nail  composition; wherein the photoinitiator is present in an amount of 2-8% by weight of the cosmetic  nail composition; wherein the plurality of solvents is present in a total amount of 50-70% by weight  of the cosmetic nail composition; and wherein the cosmetic nail composition further comprises: a  plurality of film formers present in a total amount of 5-20% by weight of the cosmetic nail  composition; a UV absorbing agent present in a total amount of no more than 1% by weight of the  cosmetic nail composition; a pH adjusting agent present in a total amount of no more than 1% by  weight of the cosmetic nail composition; a filler present in a total amount of no more than 2% by  weight of the cosmetic nail composition; and a colorant; wherein the cosmetic nail composition is  substantially free of all other materials.  23 . A method for providing a nail composition with improved wear, comprising: applying a  composition according to claim 1 to a nail; and curing the composition by exposing the composition  to an ultraviolet (UV) light.  24 . The method according to claim 23, further comprising removing the composition after a period  of time.","[{'name': 'polymer', 'label': 'Material', 'properties': {}}, {'name': 'epoxy resin', 'label': 'Chemical', 'properties': {'type': 'tosylamide'}}, {'name': 'acrylate', 'label': 'Chemical', 'properties': {}}, {'name': 'cosmetic nail composition', 'label': 'Product', 'properties': {}}, {'name': 'colorant', 'label': 'Material', 'properties': {}}, {'name': 'filler', 'label': 'Material', 'properties': {}}, {'name': 'pH adjusting agent', 'label': 'Material', 'properties': {}}, {'name': 'UV absorbing agent', 'label': 'Material', 'properties': {}}, {'name': 'nail', 'label': 'Body Part', 'properties': {'type': 'natural'}}]","[{'start': 'polymer', 'end': 'epoxy resin', 'type': 'is composed of', 'properties': {}}, {'start': 'epoxy resin', 'end': 'tosylamide', 'type': 'is a type of', 'properties': {}}, {'start': 'cosmetic nail composition', 'end': 'acrylate', 'type': 'consists of', 'properties': {}}, {'start': 'cosmetic nail composition', 'end': 'colorant', 'type': 'includes', 'properties': {}}, {'start': 'cosmetic nail composition', 'end': 'filler', 'type': 'includes', 'properties': {}}, {'start': 'cosmetic nail composition', 'end': 'pH adjusting agent', 'type': 'includes', 'properties': {}}, {'start': 'cosmetic nail composition', 'end': 'UV absorbing agent', 'type': 'includes', 'properties': {}}, {'start': 'polymer', 'end': 'cosmetic nail composition', 'type': 'is used in', 'properties': {}}, {'start': 'nail', 'end': 'cosmetic nail composition', 'type': 'contains', 'properties': {}}]"

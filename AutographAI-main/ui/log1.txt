@@ -1,0 +1,72 @@
+.
+├── Dockerfile
+├── graph
+│   └── kg_1.html
+├── index.html
+├── log1.txt
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── src
+│   ├── chat-with-kg
+│   │   ├── App.tsx
+│   │   ├── ChatContainer.tsx
+│   │   ├── ChatInput.tsx
+│   │   ├── ChatMessage.tsx
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   └── types
+│   │       └── websocketTypes.ts
+│   ├── components
+│   │   ├── keymodal.tsx
+│   │   └── switch.tsx
+│   ├── declarations.d.ts
+│   ├── report-generation
+│   │   ├── App.tsx
+│   │   ├── Report.tsx
+│   │   ├── graph
+│   │   │   └── kg_1.html
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   ├── types.ts
+│   │   └── utils
+│   │       ├── fetch-example-companies.ts
+│   │       ├── fetch-report.ts
+│   │       └── neo4j-utils.ts
+│   ├── unstructured-import
+│   │   ├── App.tsx
+│   │   ├── README.md
+│   │   ├── components
+│   │   │   ├── ChunkList.tsx
+│   │   │   └── Toolbox.tsx
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   ├── types
+│   │   │   └── respons-types.ts
+│   │   └── utils
+│   │       ├── bounding-box-utils.ts
+│   │       ├── chunk-utils.ts
+│   │       ├── cypher-utils.ts
+│   │       ├── fetch-utils.ts
+│   │       ├── file-utils.ts
+│   │       ├── graph-schema-utils.ts
+│   │       ├── ocr-util.ts
+│   │       └── pdf-extract-utils.ts
+│   └── use-case-selector
+│       ├── Hourglass.tsx
+│       ├── background.tsx
+│       ├── background2.tsx
+│       ├── index.css
+│       └── main.tsx
+├── tailwind.config.js
+├── tsconfig.json
+├── use-cases
+│   ├── chat-with-kg
+│   │   └── index.html
+│   ├── report-generation
+│   │   └── index.html
+│   └── unstructured-import
+│       └── index.html
+└── vite.config.js
+
+18 directories, 52 files

@@ -1,0 +1,380 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 700px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="composition">composition</option>
+                                
+                                    <option value="keratin material">keratin material</option>
+                                
+                                    <option value="WO2023060387">WO2023060387</option>
+                                
+                                    <option value="acrylic acid homopolymer">acrylic acid homopolymer</option>
+                                
+                                    <option value="xanthan gum">xanthan gum</option>
+                                
+                                    <option value="alginic acid and alginates">alginic acid and alginates</option>
+                                
+                                    <option value="mineral salt">mineral salt</option>
+                                
+                                    <option value="vitreoscilla ferment">vitreoscilla ferment</option>
+                                
+                                    <option value="acrylic acid homopolymer crosslinked with an allyl ether">acrylic acid homopolymer crosslinked with an allyl ether</option>
+                                
+                                    <option value="alginate polymer">alginate polymer</option>
+                                
+                                    <option value="crosslinked acrylic acid homopolymer">crosslinked acrylic acid homopolymer</option>
+                                
+                                    <option value="polymer selected from alginic acid and alginates">polymer selected from alginic acid and alginates</option>
+                                
+                                    <option value="water insoluble active ingredient">water insoluble active ingredient</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": [], "explanation": "The term \u0027composition\u0027 in the context refers to a formulation that has specific properties, such as viscosity in the range of 60-90 UD. The mention of viscosity and the use of a viscometer indicate that the composition is a structured formulation. However, there is no indication in the text that the composition itself acts as an active ingredient with a pharmacological or cosmetic function. The context provided does not specify any active roles or weights associated with the composition, so it is deemed a structural component in this case.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "viscosity modifier", "id": "composition", "is_active_ingredient": false, "is_structural_component": true, "label": "composition", "name": "composition", "shape": "circle", "size": 60, "standard_name": "not found", "structural_component_weight": null}, {"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": [], "explanation": "Keratin material is not an ingredient of the composition but rather the target or substrate to which the composition is applied. This is evident from the phrase \u0027applying the composition as described above to the keratin material,\u0027 which indicates a process of use rather than a compositional element. The keratin material is the subject of the non-therapeutic process but is not a part of the composition itself, thus it is neither an active ingredient nor a structural component.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "not applicable", "id": "keratin material", "is_active_ingredient": false, "is_structural_component": false, "label": "keratin\nmaterial", "name": "keratin material", "shape": "circle", "size": 60, "standard_name": "not found", "structural_component_weight": null}, {"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": [], "explanation": "This node represents the overall composition or claim WO2023060387. It serves as a central node to which other components are linked as part of the composition. This node does not have an active or structural role itself but acts as a container for other ingredients.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "not found", "id": "WO2023060387", "is_active_ingredient": false, "is_structural_component": false, "label": "WO2023060387", "name": "WO2023060387", "shape": "circle", "size": 60, "standard_name": "not found", "structural_component_weight": null}, {"borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": [], "explanation": "Acrylic acid homopolymer is typically used as a thickener or stabilizer in cosmetic formulations. In the context, it is listed with a specific weight percentage, indicating its role as a structural component rather than an active ingredient. The mention of its concentration, \u0027ranging from 0.07 wt.% to 0.3 wt.%,\u0027 supports its function in providing structure or stability to the composition rather than any active biological effect.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "emulsion stabilizer", "id": "acrylic acid homopolymer", "is_active_ingredient": false, "is_structural_component": true, "label": "acrylic\nacid\nhomopolymer", "name": "acrylic acid homopolymer", "shape": "circle", "size": 60, "standard_name": "Acrylates Copolymer", "structural_component_weight": "0.07\u20130.3 wt.%"}, {"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": [], "explanation": "Xanthan gum is typically used as a thickening agent in cosmetic compositions, contributing to the texture and stability of the product. The specified weight range (0.05\u20130.2 wt.%) and its mention alongside other structural components suggest its role in maintaining the gel\u0027s consistency and stability.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "emulsion stabilizer", "id": "xanthan gum", "is_active_ingredient": false, "is_structural_component": true, "label": "xanthan\ngum", "name": "xanthan gum", "shape": "circle", "size": 60, "standard_name": "Xanthan Gum", "structural_component_weight": "0.05\u20130.2 wt.%"}, {"borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": ["sodium alginate", "ammonium alginate", "potassium alginate"], "explanation": "Alginic acid and alginates are typically used as thickening and gelling agents in cosmetic and pharmaceutical applications. The text specifies their concentration, \u0027ranging from 0.02 wt.% to 0.15 wt.%,\u0027 indicating their role in providing structure or viscosity to the composition. This suggests they function as structural components rather than active ingredients.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "emulsion stabilizer", "id": "alginic acid and alginates", "is_active_ingredient": false, "is_structural_component": true, "label": "alginic\nacid\nand\nalginates", "name": "alginic acid and alginates", "shape": "circle", "size": 60, "standard_name": "Sodium Alginate", "structural_component_weight": "0.02\u20130.15 wt.%"}, {"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": ["lithium carbonate", "magnesium chloride", "magnesium sulfate", "magnesium nitrate", "magnesium carbonate"], "explanation": "The text mentions \u0027mineral salt\u0027 as being present in the composition in an amount ranging from 0.001 wt.% to 0.6 wt.%. The context does not indicate a specific active role for the mineral salt, suggesting it is more likely part of the composition\u0027s structural or excipient components. The keywords \u0027amount ranging from\u0027 and \u0027relative to the total weight\u0027 highlight its quantitative presence, aligning with a structural role.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "pH adjuster", "id": "mineral salt", "is_active_ingredient": false, "is_structural_component": true, "label": "mineral\nsalt", "name": "mineral salt", "shape": "circle", "size": 60, "standard_name": "not found", "structural_component_weight": "0.001-0.6 wt.%"}, {"active_ingredient_weight": "0.01-0.2 wt.%", "borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": [], "explanation": "Vitreoscilla ferment is specified in the text as being present in the composition in the range of 0.01 wt.% to 0.2 wt.%. The use of \u0027ferment\u0027 indicates a potential active role, possibly related to skin conditioning or microbial activity. The phrase \u0027comprising, relative to the total weight of the composition\u0027 suggests it has an active purpose in the formulation.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "skin conditioning agent", "id": "vitreoscilla ferment", "is_active_ingredient": true, "is_structural_component": false, "label": "vitreoscilla\nferment", "name": "vitreoscilla ferment", "shape": "circle", "size": 60, "standard_name": "Vitreoscilla Ferment", "structural_component_weight": null}, {"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": ["an allyl ether of pentaerythritol", "an allyl ether of sucrose", "an allyl ether of propylene"], "explanation": "The \u0027acrylic acid homopolymer crosslinked with an allyl ether\u0027 is specified as present in the composition in a range from 0.05 wt.% to 0.3 wt.%. This suggests a structural role, likely as a thickening or film-forming agent within the formulation. The absence of any active claims in the context supports this interpretation, where \u0027crosslinked\u0027 and \u0027homopolymer\u0027 indicate its structural nature.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "film forming agent", "id": "acrylic acid homopolymer crosslinked with an allyl ether", "is_active_ingredient": false, "is_structural_component": true, "label": "acrylic\nacid\nhomopolymer\ncrosslinked\nwith\nan\nallyl\nether", "name": "acrylic acid homopolymer crosslinked with an allyl ether", "shape": "circle", "size": 60, "standard_name": "not found", "structural_component_weight": "0.05-0.3 wt.%"}, {"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": ["alginic acid", "sodium alginate", "ammonium alginate", "potassium alginate"], "explanation": "The text specifies the presence of \u0027alginate polymer\u0027 within the composition in a range from 0.02 wt.% to 0.15 wt.%. \u0027Alginate\u0027 polymers, like alginic acid and its salts (e.g., sodium alginate), are commonly used as thickeners or stabilizing agents. The context does not suggest any active role, reinforcing its structural nature through keywords \u0027composition\u0027 and \u0027polymer\u0027.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "emulsion stabilizer", "id": "alginate polymer", "is_active_ingredient": false, "is_structural_component": true, "label": "alginate\npolymer", "name": "alginate polymer", "shape": "circle", "size": 60, "standard_name": "Sodium Alginate", "structural_component_weight": "0.02-0.15 wt.%"}, {"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": ["homopolymer of acrylic acid crosslinked with an alyl ether of pentaerythritol", "an alyl ether of sucrose", "an alyl ether of propylene"], "explanation": "The crosslinked acrylic acid homopolymer is mentioned as a component contributing to the structure of the hydrous gel. Its presence in a specific concentration range (0.05\u20130.3 wt.%) suggests it acts as a thickening or stabilizing agent, typical of structural components. The mention of \u0027crosslinked\u0027 and \u0027homopolymer\u0027 indicates its role in forming the gel matrix.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "emulsion stabilizer", "id": "crosslinked acrylic acid homopolymer", "is_active_ingredient": false, "is_structural_component": true, "label": "crosslinked\nacrylic\nacid\nhomopolymer", "name": "crosslinked acrylic acid homopolymer", "shape": "circle", "size": 60, "standard_name": "Carbomer", "structural_component_weight": "0.05\u20130.3 wt.%"}, {"active_ingredient_weight": null, "borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": ["alginic acid", "alginates"], "explanation": "The polymer selected from alginic acid and alginates is used as a structural component, likely contributing to the gelling properties of the formulation. The specified weight range (0.02\u20130.2 wt.%) and the nature of alginates, which are often used for their film-forming and thickening properties, support their role as structural components.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "emulsion stabilizer", "id": "polymer selected from alginic acid and alginates", "is_active_ingredient": false, "is_structural_component": true, "label": "polymer\nselected\nfrom\nalginic\nacid\nand\nalginates", "name": "polymer selected from alginic acid and alginates", "shape": "circle", "size": 60, "standard_name": "Alginic Acid", "structural_component_weight": "0.02\u20130.2 wt.%"}, {"active_ingredient_weight": "0.01\u20130.2 wt.%", "borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "examples_mentioned": ["vitreoscilla ferment", "silica", "boron nitride"], "explanation": "The text explicitly mentions \u0027water insoluble active ingredient\u0027 as a key component of the composition, indicating its role in caring for keratin materials. The weight range provided (0.01\u20130.2 wt.%) further supports its active role, as active ingredients are often specified with precise concentrations. Keywords like \u0027selected from vitreoscilla ferment, silica, boron nitride\u0027 suggest it plays a significant role in the composition.", "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "functional_role": "skin conditioning agent", "id": "water insoluble active ingredient", "is_active_ingredient": true, "is_structural_component": false, "label": "water\ninsoluble\nactive\ningredient", "name": "water insoluble active ingredient", "shape": "circle", "size": 60, "standard_name": "not found"}]);
+                  edges = new vis.DataSet([{"color": "#848484", "count": 4, "from": "composition", "label": "applied to", "to": "keratin material", "width": 2}, {"color": "#848484", "count": 4, "from": "composition", "label": "contains", "to": "WO2023060387", "width": 2}, {"color": "#848484", "count": 4, "from": "WO2023060387", "label": "contains", "to": "acrylic acid homopolymer", "width": 2}, {"color": "#848484", "count": 4, "from": "WO2023060387", "label": "contains", "to": "xanthan gum", "width": 2}, {"color": "#848484", "count": 4, "from": "WO2023060387", "label": "contains", "to": "alginic acid and alginates", "width": 2}, {"color": "#848484", "count": 4, "from": "WO2023060387", "label": "contains", "to": "mineral salt", "width": 2}, {"color": "#848484", "count": 4, "from": "WO2023060387", "label": "contains", "to": "vitreoscilla ferment", "width": 2}, {"color": "#848484", "count": 4, "from": "WO2023060387", "label": "contains", "to": "acrylic acid homopolymer crosslinked with an allyl ether", "width": 2}, {"color": "#848484", "count": 4, "from": "WO2023060387", "label": "contains", "to": "alginate polymer", "width": 2}, {"color": "#848484", "count": 4, "from": "xanthan gum", "label": "contains", "to": "crosslinked acrylic acid homopolymer", "width": 2}, {"color": "#848484", "count": 4, "from": "xanthan gum", "label": "contains", "to": "polymer selected from alginic acid and alginates", "width": 2}, {"color": "#848484", "count": 4, "from": "water insoluble active ingredient", "label": "contains", "to": "crosslinked acrylic acid homopolymer", "width": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"barnesHut": {"gravitationalConstant": -50000, "centralGravity": 0.2, "springLength": 200, "springConstant": 0.04, "avoidOverlap": 1}, "minVelocity": 0.75}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

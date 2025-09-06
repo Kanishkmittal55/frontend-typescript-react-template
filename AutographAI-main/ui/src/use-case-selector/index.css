@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css?family=Electrolize");
+
+/* index.css or hourglass.css */
+.hourglass-bg {
+    /* Transparent glass effect */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    
+    /* A glowing border (2px neon) */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+  
+    /* "Bow tie" clip-path example: */
+    clip-path: polygon(
+        0% 0%,     /* top left corner */
+        0% 0%,    /* top edge near center */
+        50% 30%,   /* top "pinch" inward */
+        100% 0%,    /* top edge near center */
+        100% 0%,   /* top right corner */
+        100% 100%, /* bottom right corner */
+        100% 100%,  /* bottom edge near center */
+        50% 70%,   /* bottom "pinch" inward */
+        0% 100%,  /* bottom edge near center */
+        0% 100%    /* bottom left corner */
+    );
+  
+    /* Let's do a subtle 3D transform to make it look more "hourglassy" */
+    transform-style: preserve-3d;
+    /* transform: rotateY(5deg) rotateX(5deg) rotateZ(90deg) scale(1.02); */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  
+  .hourglass-bg:hover {
+    /* On hover, rotate a bit and intensify glow */
+    transform: rotateY(5deg) rotateX(5deg) rotateZ(5deg) scale(1.02);
+    box-shadow: 0 0 30px rgba(255,255,255,0.5);
+  }
+  
+
+
+.space-btn {
+  position: relative;
+  font-family: "Electrolize", sans-serif;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 0.125em;
+  color: #ffb902;
+  padding: 1em 2em;
+  background: none;
+  border: 2px solid #ffb902;
+  cursor: pointer;
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.space-btn:hover {
+  color: #fff;
+  border-color: #fff;
+}
+
+.space-btn::before,
+.space-btn::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #ffb902;
+  transition: 0.3s;
+}
+
+.space-btn::before {
+  top: 0;
+  left: -100%;
+}
+
+.space-btn::after {
+  bottom: 0;
+  right: -100%;
+}
+
+.space-btn:hover::before {
+  left: 0;
+}
+
+.space-btn:hover::after {
+  right: 0;
+}

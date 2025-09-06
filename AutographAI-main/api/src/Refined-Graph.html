@@ -1,0 +1,396 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 700px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="DummyPatent">DummyPatent</option>
+                                
+                                    <option value="Lithium Chloride">Lithium Chloride</option>
+                                
+                                    <option value="Vitreoscilla Ferment">Vitreoscilla Ferment</option>
+                                
+                                    <option value="Carbomer">Carbomer</option>
+                                
+                                    <option value="mineral salt">mineral salt</option>
+                                
+                                    <option value="Calcium Salts">Calcium Salts</option>
+                                
+                                    <option value="Xanthan Gum">Xanthan Gum</option>
+                                
+                                    <option value="water insoluble active ingredient">water insoluble active ingredient</option>
+                                
+                                    <option value="Crosslinked Acrylic Acid Homopolymer">Crosslinked Acrylic Acid Homopolymer</option>
+                                
+                                    <option value="Alginate Derivatives">Alginate Derivatives</option>
+                                
+                                    <option value="Alginic Acid">Alginic Acid</option>
+                                
+                                    <option value="Sodium Alginate">Sodium Alginate</option>
+                                
+                                    <option value="Ammonium Alginate">Ammonium Alginate</option>
+                                
+                                    <option value="Potassium Alginate">Potassium Alginate</option>
+                                
+                                    <option value="vitreoscilla ferment">vitreoscilla ferment</option>
+                                
+                                    <option value="crosslinked acrylic acid homopolymer">crosslinked acrylic acid homopolymer</option>
+                                
+                                    <option value="Calcium Chloride">Calcium Chloride</option>
+                                
+                                    <option value="silica">silica</option>
+                                
+                                    <option value="boron nitride">boron nitride</option>
+                                
+                                    <option value="acrylic acid homopolymer crosslinked with an allyl ether of pentaerythritol">acrylic acid homopolymer crosslinked with an allyl ether of pentaerythritol</option>
+                                
+                                    <option value="Alginic Acid and Alginates">Alginic Acid and Alginates</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "DummyPatent", "label": "DummyPatent", "name": "DummyPatent", "shape": "circle", "size": 60, "type": "patent"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Lithium Chloride", "label": "Lithium\nChloride", "name": "Lithium Chloride", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Vitreoscilla Ferment", "label": "Vitreoscilla\nFerment", "name": "Vitreoscilla Ferment", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Carbomer", "label": "Carbomer", "name": "Carbomer", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "mineral salt", "label": "mineral\nsalt", "name": "mineral salt", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Calcium Salts", "label": "Calcium\nSalts", "name": "Calcium Salts", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Xanthan Gum", "label": "Xanthan\nGum", "name": "Xanthan Gum", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "water insoluble active ingredient", "label": "water\ninsoluble\nactive\ningredient", "name": "water insoluble active ingredient", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Crosslinked Acrylic Acid Homopolymer", "label": "Crosslinked\nAcrylic\nAcid\nHomopolymer", "name": "Crosslinked Acrylic Acid Homopolymer", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Alginate Derivatives", "label": "Alginate\nDerivatives", "name": "Alginate Derivatives", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Alginic Acid", "label": "Alginic\nAcid", "name": "Alginic Acid", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Sodium Alginate", "label": "Sodium\nAlginate", "name": "Sodium Alginate", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Ammonium Alginate", "label": "Ammonium\nAlginate", "name": "Ammonium Alginate", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Potassium Alginate", "label": "Potassium\nAlginate", "name": "Potassium Alginate", "shape": "circle", "size": 60, "type": "representative"}, {"borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "vitreoscilla ferment", "label": "vitreoscilla\nferment", "name": "vitreoscilla ferment", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "crosslinked acrylic acid homopolymer", "label": "crosslinked\nacrylic\nacid\nhomopolymer", "name": "crosslinked acrylic acid homopolymer", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Calcium Chloride", "label": "Calcium\nChloride", "name": "Calcium Chloride", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "silica", "label": "silica", "name": "silica", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#db5f57", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "boron nitride", "label": "boron\nnitride", "name": "boron nitride", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "acrylic acid homopolymer crosslinked with an allyl ether of pentaerythritol", "label": "acrylic\nacid\nhomopolymer\ncrosslinked\nwith\nan\nallyl\nether\nof\npentaerythritol", "name": "acrylic acid homopolymer crosslinked with an allyl ether of pentaerythritol", "shape": "circle", "size": 60, "type": "entry"}, {"borderWidth": 2, "color": {"background": "#57d3db", "border": "#2471A3", "highlight": {"background": "#F7DC6F", "border": "#B7950B"}}, "font": {"color": "#000000", "face": "arial", "multi": true, "size": 30}, "id": "Alginic Acid and Alginates", "label": "Alginic\nAcid\nand\nAlginates", "name": "Alginic Acid and Alginates", "shape": "circle", "size": 60, "type": "entry"}]);
+                  edges = new vis.DataSet([{"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Lithium Chloride", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Vitreoscilla Ferment", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Carbomer", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "mineral salt", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Calcium Salts", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Xanthan Gum", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "water insoluble active ingredient", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Crosslinked Acrylic Acid Homopolymer", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Alginate Derivatives", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Alginic Acid", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Sodium Alginate", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Ammonium Alginate", "width": 2}, {"color": "#848484", "count": null, "from": "DummyPatent", "label": "contains", "to": "Potassium Alginate", "width": 2}, {"color": "#848484", "count": null, "from": "Lithium Chloride", "label": "has_entry", "to": "Lithium Chloride", "width": 2}, {"color": "#848484", "count": null, "from": "Vitreoscilla Ferment", "label": "has_entry", "to": "vitreoscilla ferment", "width": 2}, {"color": "#848484", "count": null, "from": "vitreoscilla ferment", "label": "has_entry", "to": "water insoluble active ingredient", "width": 2}, {"color": "#848484", "count": null, "from": "Carbomer", "label": "has_entry", "to": "crosslinked acrylic acid homopolymer", "width": 2}, {"color": "#848484", "count": null, "from": "mineral salt", "label": "has_entry", "to": "mineral salt", "width": 2}, {"color": "#848484", "count": null, "from": "Calcium Salts", "label": "has_entry", "to": "Calcium Chloride", "width": 2}, {"color": "#848484", "count": null, "from": "Xanthan Gum", "label": "has_entry", "to": "Xanthan Gum", "width": 2}, {"color": "#848484", "count": null, "from": "water insoluble active ingredient", "label": "has_entry", "to": "silica", "width": 2}, {"color": "#848484", "count": null, "from": "water insoluble active ingredient", "label": "has_entry", "to": "boron nitride", "width": 2}, {"color": "#848484", "count": null, "from": "Crosslinked Acrylic Acid Homopolymer", "label": "has_entry", "to": "acrylic acid homopolymer crosslinked with an allyl ether of pentaerythritol", "width": 2}, {"color": "#848484", "count": null, "from": "Alginate Derivatives", "label": "has_entry", "to": "Sodium Alginate", "width": 2}, {"color": "#848484", "count": null, "from": "Alginate Derivatives", "label": "has_entry", "to": "Ammonium Alginate", "width": 2}, {"color": "#848484", "count": null, "from": "Alginate Derivatives", "label": "has_entry", "to": "Potassium Alginate", "width": 2}, {"color": "#848484", "count": null, "from": "Alginate Derivatives", "label": "has_entry", "to": "Alginic Acid", "width": 2}, {"color": "#848484", "count": null, "from": "Sodium Alginate", "label": "has_entry", "to": "Alginic Acid and Alginates", "width": 2}, {"color": "#848484", "count": null, "from": "Ammonium Alginate", "label": "has_entry", "to": "Alginic Acid and Alginates", "width": 2}, {"color": "#848484", "count": null, "from": "Potassium Alginate", "label": "has_entry", "to": "Alginic Acid and Alginates", "width": 2}, {"color": "#848484", "count": null, "from": "Alginic Acid", "label": "has_entry", "to": "Alginic Acid and Alginates", "width": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"barnesHut": {"gravitationalConstant": -50000, "centralGravity": 0.2, "springLength": 200, "springConstant": 0.04, "avoidOverlap": 1}, "minVelocity": 0.75}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+post: # Work in Progress
+  summary: Recieve and process chunks coming from the frontend
+  description: For a patent the chunks were divided in the frontend itself , the backend is just receiving the chunks processing it using a prompt to create the redudant graph
+  operationId: v1PostChunksToRedundantGraph
+  requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Pet"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PetForm"
+          text/plain:
+            schema:
+              type: string
+  tags:
+    - graph-server
+  parameters:
+    - name: chunks
+      in: query
+      description: username or email of the user
+      required: true
+      style: form
+      explode: false
+      schema:
+        type: string
+  responses:
+    "200":
+      description: User registered successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/VerificationEmailResponse.yml'
+    "400":
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ErrorResponse.yml'
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ErrorResponse.yml'
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ErrorResponse.yml'
+    "503":
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ErrorResponse.yml'
